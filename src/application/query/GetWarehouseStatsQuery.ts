@@ -1,20 +1,19 @@
 import { Id } from "@domain/model/Entity";
 import WarehouseRepository from "@domain/repository/WarehouseRepository";
-
-type WarehouseStats = {
-  id: Id,
-  totalSpace: number,
-  currentStockedSpace: number,
-  futureStokedSpace: number,
-  freeSpace: number,
-}
+import { SpaceStats } from "@domain/model/Warehouse";
+import EntityNotFoundError from "@application/errors/EntityNotFoundError";
 
 export default class GetWarehouseStatsQuery {
   constructor(
     private warehouseRepository: WarehouseRepository,
   ) { }
 
-  async run(): Promise<Array<WarehouseStats>> {
-    return [];
+  async run(id: Id): Promise<SpaceStats> {
+    const existingWarehouse = await this.warehouseRepository.findById(id);
+    if (!existingWarehouse) {
+      throw new EntityNotFoundError('product', id);
+    }
+
+    return existingWarehouse.calculateSpaceStats();
   }
 }

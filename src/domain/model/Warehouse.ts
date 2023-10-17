@@ -26,6 +26,13 @@ export type Inventory = Array<{
   importedAt: Date,
 }>;
 
+export type SpaceStats = {
+  currentUsedUpSpace: number,
+  totalUsedUpSpace: number,
+  totalSpace: number,
+  freeSpace: number,
+};
+
 export default class Warehouse extends Entity {
   private name: string;
   private size: Size;
@@ -79,6 +86,20 @@ export default class Warehouse extends Entity {
     return this.inventory.some(item => item.product.id === productId);
   }
 
+  calculateSpaceStats(): SpaceStats {
+    const totalUsedUpSpace = this.getUsedUpSpace(true);
+    const currentUsedUpSpace = this.getUsedUpSpace(false);
+    const totalSpace = this.calculateTotalSpaceBySize(this.size);
+    const freeSpace = totalSpace - currentUsedUpSpace;
+
+    return {
+      totalUsedUpSpace,
+      currentUsedUpSpace,
+      totalSpace,
+      freeSpace,
+    };
+  }
+
   private increaseInventory(product: Product, quantity: number, date: Date) {
     this.inventory.push({
       product: {
@@ -125,7 +146,7 @@ export default class Warehouse extends Entity {
   }
 
   private makeSureThereIsEnoughSpaceFor(product: Product, quantity: number) {
-    const usedUpSpace = this.getTotalUsedUpSpace();
+    const usedUpSpace = this.getUsedUpSpace();
     const totalCapacity = this.getTotalCapacity();
     const spaceTheProductWillNeed = this.calculateTotalSpaceBySize(product.getSize()) * quantity;
 
@@ -145,8 +166,13 @@ export default class Warehouse extends Entity {
     }
   }
 
-  private getTotalUsedUpSpace() {
+  private getUsedUpSpace(includeFuture = true) {
     return this.inventory.reduce((space, item) => {
+      const shouldCountProduct = includeFuture ? true : (item.importedAt.getTime() <= new Date().getTime());
+      if (!shouldCountProduct) {
+        return space;
+      }
+
       space += item.quantity * this.calculateTotalSpaceBySize(item.product.size);
       return space;
     }, 0);

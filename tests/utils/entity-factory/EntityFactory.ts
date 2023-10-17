@@ -6,9 +6,10 @@ import IdGenerator from "@domain/model/IdGenerator";
 
 export default class EntityFactory {
   createProduct(override: DeepPartial<ProductConstructorParams> = {}): Product {
+    const id = IdGenerator.generate();
     const defaults = {
-      id: IdGenerator.generate(),
-      name: `Test product #${Date.now()}`,
+      id,
+      name: `Test product #${id}`,
       size: {
         width: 1,
         height: 1,
@@ -22,9 +23,10 @@ export default class EntityFactory {
   }
 
   createWarehouse(override: DeepPartial<WarehouseConstructorParams> = {}): Warehouse {
+    const id = IdGenerator.generate();
     const defaults = {
-      id: IdGenerator.generate(),
-      name: `Test warehouse #${Date.now()}`,
+      id,
+      name: `Test warehouse #${id}`,
       size: {
         width: 10,
         height: 10,

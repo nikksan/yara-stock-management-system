@@ -7,6 +7,6 @@ export default class ListWarehousesQuery {
   ) {}
 
   async run(): Promise<Array<Warehouse>> {
-    return [];
+    return this.warehouseRepository.findAll();
   }
 }

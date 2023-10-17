@@ -14,18 +14,24 @@ export default class TypeValidator {
     if (size.length <= 0) {
       throw new TypeValidationError('size.length', size.length, 'valid dimension');
     }
+
+    // todo: check for max safe integer
   }
 
   static validateName(name: string) {
     if (name.trim().length === 0) {
       throw new TypeValidationError('name', name, 'non-empty string');
     }
+
+    // todo: check for length
   }
 
   static validateQuantity(quantity: number) {
     if (quantity <= 0) {
       throw new TypeValidationError('quantity', quantity, 'positive number');
     }
+
+    // todo: check for max safe integer
   }
 
   static validateDate(date: Date) {

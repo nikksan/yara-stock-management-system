@@ -1,5 +1,5 @@
 import Entity from '@domain/model/Entity';
-import Repository from '@domain/repository/Repository';
+import Repository, { Paginated, PaginationOpts } from '@domain/repository/Repository';
 import { cloneDeep } from 'lodash';
 
 export default class InMemoryRepository<EntityType extends Entity> implements Repository<EntityType> {
@@ -40,6 +40,20 @@ export default class InMemoryRepository<EntityType extends Entity> implements Re
 
   async deleteAll(): Promise<void> {
     this.entities.clear();
+  }
+
+  async findAndCountByCriteria(opts: PaginationOpts): Promise<Paginated<EntityType>> {
+    const start = (opts.page - 1) * opts.limit;
+    const end = start + opts.limit;
+
+    const items = Array.from(this.entities.values())
+      .slice(start, end)
+      .map(el => cloneDeep(el));
+
+    return {
+      items,
+      total: this.entities.size,
+    }
   }
 
   protected createEntity(entity: EntityType) {
