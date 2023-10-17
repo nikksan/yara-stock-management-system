@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "start": "ts-node -r tsconfig-paths/register src/index.ts",
-    "watch": "jest --watch"
+    "watch": "jest --watch",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",

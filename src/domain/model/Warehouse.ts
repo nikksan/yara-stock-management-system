@@ -71,6 +71,10 @@ export default class Warehouse extends Entity {
     return this.name;
   }
 
+  getSize(): Size {
+    return this.size;
+  }
+
   private increaseInventory(product: Product, quantity: number, date: Date) {
     this.inventory.push({
       product: {
