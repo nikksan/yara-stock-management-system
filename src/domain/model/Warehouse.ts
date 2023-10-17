@@ -75,6 +75,10 @@ export default class Warehouse extends Entity {
     return this.size;
   }
 
+  hasProductStocked(productId: Id) {
+    return this.inventory.some(item => item.product.id === productId);
+  }
+
   private increaseInventory(product: Product, quantity: number, date: Date) {
     this.inventory.push({
       product: {

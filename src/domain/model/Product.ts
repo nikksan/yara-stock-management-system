@@ -36,4 +36,20 @@ export default class Product extends Entity {
   getIsHazardous() {
     return this.isHazardous;
   }
+
+  changeSize(size: Size) {
+    TypeValidator.validateSize(size);
+
+    this.size = size;
+  }
+
+  changeName(name: string) {
+    TypeValidator.validateName(name);
+
+    this.name = name;
+  }
+
+  changeIsHazardous(isHazardous: boolean) {
+    this.isHazardous = isHazardous;
+  }
 }
