@@ -7,7 +7,7 @@ export enum LogImplementation {
 }
 
 class LoggerFactory {
-  constructor(private config: Config['logger']) { }
+  constructor(private config: Config['log']) { }
 
   create(prefix: string): Logger {
     switch (this.config.impl) {

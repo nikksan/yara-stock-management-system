@@ -4,7 +4,7 @@ import { Id } from './Entity';
 export default class IdGenerator {
   static generate(): Id {
     const parts: Array<string> = [];
-    for (const size of [8, 4, 4, 4, 12]) {
+    for (const size of [4, 2, 2, 2, 6]) {
       parts.push(randomBytes(size).toString('hex'));
     }
 

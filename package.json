@@ -5,6 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "start": "ts-node -r tsconfig-paths/register src/index.ts",
+    "db:migrate": "./sequelize-cli db:migrate",
+    "db:migrate:new": "./sequelize-cli migration:create --name",
     "watch": "jest --watch",
     "test": "jest"
   },
@@ -13,8 +15,12 @@
   "license": "ISC",
   "dependencies": {
     "@apollo/server": "^4.9.4",
+    "dotenv": "^16.3.1",
     "graphql": "^16.8.1",
     "lodash": "^4.17.21",
+    "pg": "^8.11.3",
+    "sequelize": "^6.33.0",
+    "sequelize-cli": "^6.6.1",
     "ts-essentials": "^9.4.1",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.2.0"
