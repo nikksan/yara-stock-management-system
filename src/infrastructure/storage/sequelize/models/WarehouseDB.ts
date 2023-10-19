@@ -1,12 +1,14 @@
 import Size from '@domain/model/Size';
-import { Inventory } from '@domain/model/Warehouse';
+import { InventoryItem } from '@domain/model/Warehouse';
 import { Sequelize, DataTypes, Model, ModelStatic } from 'sequelize';
 
 export type WarehouseAttributes = {
   id: string,
   name: string,
   size: Size,
-  inventory: Inventory,
+  inventory: Array<Omit<InventoryItem, 'importedAt'> & {
+    importedAt: string,
+  }>,
 }
 
 export type WarehouseDAO = Model<WarehouseAttributes>;

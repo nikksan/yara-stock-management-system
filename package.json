@@ -7,7 +7,7 @@
     "start": "ts-node -r tsconfig-paths/register src/index.ts",
     "db:migrate": "./sequelize-cli db:migrate",
     "db:migrate:new": "./sequelize-cli migration:create --name",
-    "watch": "jest --watch",
+    "watch": "jest --watch --bail",
     "test": "jest"
   },
   "keywords": [],

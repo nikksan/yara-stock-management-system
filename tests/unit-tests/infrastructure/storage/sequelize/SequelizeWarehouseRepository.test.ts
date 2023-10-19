@@ -1,13 +1,13 @@
 import { loadConfig } from "@config/index";
 import { prepareDb } from "../../../../utils/dbSetup";
-import SequelizeWarehouseRepository from "@infrastructure/repository/sequelize/SequelizeWarehouseRepository";
 import { Sequelize } from "sequelize";
 import EntityFactory from "../../../../utils/entity-factory/EntityFactory";
 import LoggerFactory from "@infrastructure/logger/LoggerFactory";
+import SequelizeWarehouseRepository from "@infrastructure/storage/sequelize/SequelizeWarehouseRepository";
+
+prepareDb();
 
 describe('SequelizeWarehouseRepository', () => {
-  prepareDb();
-
   const config = loadConfig();
 
   const loggerFactory = new LoggerFactory(config.log);
@@ -20,7 +20,20 @@ describe('SequelizeWarehouseRepository', () => {
   afterEach(() => warehouseRepository.deleteAll());
 
   it('should save an entity', async () => {
-    const warehouse = entityFactory.createWarehouse();
+    const warehouse = entityFactory.createWarehouse({
+      inventory: [
+        {
+          product: {
+            id: '1',
+            size: { width: 1, height: 1, length: 1 },
+            isHazardous: true,
+          },
+          quantity: 1,
+          importedAt: new Date(),
+        },
+      ]
+    });
+
     await warehouseRepository.save(warehouse);
 
     const savedWarehouse = await warehouseRepository.findById(warehouse.id);
@@ -38,19 +51,59 @@ describe('SequelizeWarehouseRepository', () => {
   it('should find an entity by product id', async () => {
     const warehouse1 = entityFactory.createWarehouse({
       inventory: [
-        { product: { id: '1' } },
-        { product: { id: '2' } },
+        {
+          product: {
+            id: '1',
+            size: { width: 1, height: 1, length: 1 },
+            isHazardous: true,
+          },
+          quantity: 1,
+          importedAt: new Date(),
+        },
+        {
+          product: {
+            id: '2',
+            size: { width: 1, height: 1, length: 1 },
+            isHazardous: true,
+          },
+          quantity: 1,
+          importedAt: new Date(),
+        },
       ]
     });
     const warehouse2 = entityFactory.createWarehouse({
       inventory: [
-        { product: { id: '1' } },
-        { product: { id: '4' } },
+        {
+          product: {
+            id: '1',
+            size: { width: 1, height: 1, length: 1 },
+            isHazardous: true,
+          },
+          quantity: 1,
+          importedAt: new Date(),
+        },
+        {
+          product: {
+            id: '4',
+            size: { width: 1, height: 1, length: 1 },
+            isHazardous: true,
+          },
+          quantity: 1,
+          importedAt: new Date(),
+        },
       ]
     });
     const warehouse3 = entityFactory.createWarehouse({
       inventory: [
-        { product: { id: '2' } },
+        {
+          product: {
+            id: '2',
+            size: { width: 1, height: 1, length: 1 },
+            isHazardous: true,
+          },
+          quantity: 1,
+          importedAt: new Date(),
+        },
       ]
     });
     await warehouseRepository.save(warehouse1);

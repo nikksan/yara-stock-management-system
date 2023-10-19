@@ -16,7 +16,7 @@ export type ConstructorParams = EntityConstructorParams & {
   inventory: Inventory,
 }
 
-export type Inventory = Array<{
+export type InventoryItem = {
   product: {
     id: Id,
     size: Size,
@@ -24,7 +24,9 @@ export type Inventory = Array<{
   },
   quantity: number,
   importedAt: Date,
-}>;
+};
+
+export type Inventory = Array<InventoryItem>;
 
 export type SpaceStats = {
   currentUsedUpSpace: number,

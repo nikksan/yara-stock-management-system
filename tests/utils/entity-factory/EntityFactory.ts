@@ -1,7 +1,7 @@
 import { DeepPartial } from "ts-essentials";
 import Product, { ConstructorParams as ProductConstructorParams } from '@domain/model/Product';
 import Warehouse, { ConstructorParams as WarehouseConstructorParams } from '@domain/model/Warehouse';
-import { assign } from "lodash";
+import { merge } from "lodash";
 import IdGenerator from "@domain/model/IdGenerator";
 
 export default class EntityFactory {
@@ -18,7 +18,7 @@ export default class EntityFactory {
       isHazardous: false,
     };
 
-    const params = assign(defaults, override);
+    const params = merge(defaults, override);
     return new Product(params);
   }
 
@@ -35,7 +35,7 @@ export default class EntityFactory {
       inventory: [],
     };
 
-    const params = assign(defaults, override);
+    const params = merge(defaults, override);
     return new Warehouse(params);
   }
 }

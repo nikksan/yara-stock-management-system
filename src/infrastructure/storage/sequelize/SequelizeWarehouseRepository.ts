@@ -127,7 +127,10 @@ export default class SequelizeWarehouseRepository implements WarehouseRepository
       id: entity.id,
       name: entity.getName(),
       size: entity.getSize(),
-      inventory: entity.getInventory(),
+      inventory: entity.getInventory().map(item => ({
+        ...item,
+        importedAt: item.importedAt.toISOString(),
+      })),
     }
   }
 
@@ -136,7 +139,10 @@ export default class SequelizeWarehouseRepository implements WarehouseRepository
       id: dao.dataValues.id,
       name: dao.dataValues.name,
       size: dao.dataValues.size,
-      inventory: dao.dataValues.inventory,
+      inventory: dao.dataValues.inventory.map(itemDAO => ({
+        ...itemDAO,
+        importedAt: new Date(itemDAO.importedAt),
+      })),
     });
   }
 }

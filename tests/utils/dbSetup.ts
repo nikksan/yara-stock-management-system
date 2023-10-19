@@ -11,22 +11,18 @@ export function prepareDb(): void {
     return;
   }
 
+  hasRegisteredTheHooksAlready = true;
+
   const config = loadConfig();
   const sequelize = new Sequelize(omit(config.db, ['database']));
 
   beforeAll(async () => {
     await sequelize.authenticate();
+
     await sequelize.query(`DROP DATABASE IF EXISTS "${config.db.database}";`);
     await sequelize.query(`CREATE DATABASE "${config.db.database}";`);
 
     const execAsync = promisify(exec);
     await execAsync('npm run db:migrate');
   });
-
-  // afterAll(async () => {
-  //   await sequelize.query(`DROP DATABASE "${config.db.database}";`);
-  //   await sequelize.close();
-  // });
-
-  hasRegisteredTheHooksAlready = true;
 }

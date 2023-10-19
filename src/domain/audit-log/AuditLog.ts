@@ -1,14 +1,15 @@
-import { EventType } from "@domain/event/Event";
+import Event, { EventType } from "@domain/event/Event";
 
-type SearchParams = {
+export type SearchParams = {
   types: Array<EventType>,
   data?: Record<string, unknown>,
-  date?: Date,
+  createdAt?: [Date, Date],
 }
 
 interface AuditLog {
   append(event: Event): Promise<void>;
-  search(params: SearchParams): Promise<Array<Event>>
+  search(params: SearchParams): Promise<Array<Event>>;
+  deleteAll(): Promise<void>;
 }
 
 export default AuditLog;
