@@ -6,15 +6,20 @@ import IdGenerator from "@domain/model/IdGenerator";
 import EntityNotFoundError from "@application/errors/EntityNotFoundError";
 import OperationForbiddenError from "@application/errors/OperationForbiddenError";
 import Product from "@domain/model/Product";
+import LoggerFactory from "@infrastructure/logger/LoggerFactory";
+import { loadConfig } from "@config/index";
 
 describe('UpdateProductCommand', () => {
   const productRepository = new InMemoryProductRepository();
   const warehouseRepository = new InMemoryWarehouseRepository();
   const entityFactory = new EntityFactory();
+  const config = loadConfig();
+  const loggerFactory = new LoggerFactory(config.log);
 
   const command = new UpdateProductCommand(
     warehouseRepository,
     productRepository,
+    loggerFactory,
   );
 
   it('should throw EntityNotFoundError when a product does not exist', async () => {

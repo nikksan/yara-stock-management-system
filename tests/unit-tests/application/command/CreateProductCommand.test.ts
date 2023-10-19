@@ -4,13 +4,18 @@ import EntityFactory from "../../../utils/entity-factory/EntityFactory";
 import UniqueConstraintError from "@application/errors/UniqueConstraintError";
 import TypeValidationError from "@domain/model/validation/TypeValidationError";
 import Product from "@domain/model/Product";
+import LoggerFactory from "@infrastructure/logger/LoggerFactory";
+import { loadConfig } from "@config/index";
 
 describe('CreateProductCommand', () => {
   const productRepository = new InMemoryProductRepository();
   const entityFactory = new EntityFactory();
+  const config = loadConfig();
+  const loggerFactory = new LoggerFactory(config.log);
 
   const command = new CreateProductCommand(
     productRepository,
+    loggerFactory,
   );
 
   afterEach(async () => {

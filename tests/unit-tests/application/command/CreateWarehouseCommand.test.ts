@@ -4,13 +4,19 @@ import EntityFactory from "../../../utils/entity-factory/EntityFactory";
 import UniqueConstraintError from "@application/errors/UniqueConstraintError";
 import TypeValidationError from "@domain/model/validation/TypeValidationError";
 import Warehouse from "@domain/model/Warehouse";
+import LoggerFactory from "@infrastructure/logger/LoggerFactory";
+import { loadConfig } from "@config/index";
 
 describe('CreateWarehouseCommand', () => {
   const warehouseRepository = new InMemoryWarehouseRepository();
   const entityFactory = new EntityFactory();
 
+  const config = loadConfig();
+  const loggerFactory = new LoggerFactory(config.log);
+
   const command = new CreateWarehouseCommand(
     warehouseRepository,
+    loggerFactory,
   );
 
   afterEach(async () => {

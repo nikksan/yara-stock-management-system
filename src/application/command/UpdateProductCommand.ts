@@ -4,7 +4,9 @@ import { Id } from "@domain/model/Entity";
 import Size from "@domain/model/Size";
 import ProductRepository from "@domain/repository/ProductRepository";
 import WarehouseRepository from "@domain/repository/WarehouseRepository";
-import { isEqual } from "lodash";
+import { isEqual, omit } from "lodash";
+import { Logger } from "@infrastructure/logger/Logger";
+import LoggerFactory from "@infrastructure/logger/LoggerFactory";
 
 type Input = {
   id: Id,
@@ -14,10 +16,15 @@ type Input = {
 }
 
 export default class UpdateProductCommand {
+  private logger: Logger;
+
   constructor(
     private warehouseRepository: WarehouseRepository,
     private productRepository: ProductRepository,
-  ) { }
+    loggerFactory: LoggerFactory,
+  ) {
+    this.logger = loggerFactory.create(this.constructor.name);
+  }
 
   async execute(input: Input): Promise<void> {
     const existingProduct = await this.productRepository.findById(input.id);
@@ -46,6 +53,7 @@ export default class UpdateProductCommand {
     }
 
     await this.productRepository.save(existingProduct);
+    this.logger.info(`Updated product #${existingProduct.id}, changedProps: ${Object.keys(omit(input, ['id']))}`);
   }
 
   private async makeSureProductIsNotStockedAnywhere(id: Id) {

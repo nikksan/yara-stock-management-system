@@ -5,22 +5,25 @@ import IdGenerator from "@domain/model/IdGenerator";
 import EntityNotFoundError from "@application/errors/EntityNotFoundError";
 import EntityFactory from "../../../utils/entity-factory/EntityFactory";
 import TypeValidationError from "@domain/model/validation/TypeValidationError";
-import NotEnoughSpaceInWarehouseError from "@domain/errors/NotEnoughSpaceInWarehouseError";
-import CantMixProductsError from "@domain/errors/CantMixProductsError";
 import Warehouse from "@domain/model/Warehouse";
 import EventEmitter from "@domain/event/EventEmitter";
 import { EventType } from "@domain/event/Event";
 import ProductNotStockedError from "@domain/errors/ProductNotStockedError";
 import NotEnoughQuantityError from "@domain/errors/NotEnoughQuantityError";
+import LoggerFactory from "@infrastructure/logger/LoggerFactory";
+import { loadConfig } from "@config/index";
 
 describe('ExportProductFromWarehouseCommand', () => {
   const warehouseRepository = new InMemoryWarehouseRepository();
   const productRepository = new InMemoryProductRepository();
   const entityFactory = new EntityFactory();
+  const config = loadConfig();
+  const loggerFactory = new LoggerFactory(config.log);
 
   const command = new ExportProductFromWarehouseCommand(
     warehouseRepository,
     productRepository,
+    loggerFactory,
   );
 
   const seededProduct = entityFactory.createProduct();

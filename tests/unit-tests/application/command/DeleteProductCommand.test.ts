@@ -5,15 +5,20 @@ import InMemoryWarehouseRepository from "../../../utils/in-memory-repos/InMemory
 import IdGenerator from "@domain/model/IdGenerator";
 import EntityNotFoundError from "@application/errors/EntityNotFoundError";
 import OperationForbiddenError from "@application/errors/OperationForbiddenError";
+import LoggerFactory from "@infrastructure/logger/LoggerFactory";
+import { loadConfig } from "@config/index";
 
 describe('DeleteProductCommand', () => {
   const productRepository = new InMemoryProductRepository();
   const warehouseRepository = new InMemoryWarehouseRepository();
   const entityFactory = new EntityFactory();
+  const config = loadConfig();
+  const loggerFactory = new LoggerFactory(config.log);
 
   const command = new DeleteProductCommand(
     warehouseRepository,
     productRepository,
+    loggerFactory,
   );
 
   it('should throw EntityNotFoundError when a product does not exist', async () => {

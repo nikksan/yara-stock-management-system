@@ -10,15 +10,20 @@ import CantMixProductsError from "@domain/errors/CantMixProductsError";
 import Warehouse from "@domain/model/Warehouse";
 import EventEmitter from "@domain/event/EventEmitter";
 import { EventType } from "@domain/event/Event";
+import LoggerFactory from "@infrastructure/logger/LoggerFactory";
+import { loadConfig } from "@config/index";
 
 describe('ImportProductToWarehouseCommand', () => {
   const warehouseRepository = new InMemoryWarehouseRepository();
   const productRepository = new InMemoryProductRepository();
   const entityFactory = new EntityFactory();
+  const config = loadConfig();
+  const loggerFactory = new LoggerFactory(config.log);
 
   const command = new ImportProductToWarehouseCommand(
     warehouseRepository,
     productRepository,
+    loggerFactory,
   );
 
   const seededProduct = entityFactory.createProduct();
