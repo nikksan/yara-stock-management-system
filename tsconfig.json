@@ -29,7 +29,11 @@
         "src/config/*"
       ]
     },
-    "plugins": [],
+    "plugins": [
+      {
+        "transform": "typia/lib/transform"
+      }
+    ],
     "strictNullChecks": true
   },
   "include": [

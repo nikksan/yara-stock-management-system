@@ -5,6 +5,13 @@ import WarehouseRepository from "@domain/repository/WarehouseRepository"
 import { Logger } from "@infrastructure/logger/Logger";
 import LoggerFactory from "@infrastructure/logger/LoggerFactory";
 
+export type Input = {
+  productId: Id,
+  warehouseId: Id,
+  quantity: number,
+  date?: Date,
+}
+
 export default class ImportProductToWarehouseCommand {
   private logger: Logger;
 
@@ -16,25 +23,20 @@ export default class ImportProductToWarehouseCommand {
     this.logger = loggerFactory.create(this.constructor.name);
   }
 
-  async execute(
-    productId: Id,
-    warehouseId: Id,
-    quantity: number,
-    date: Date,
-  ): Promise<void> {
-    const product = await this.productRepository.findById(productId);
+  async execute(input: Input): Promise<void> {
+    const product = await this.productRepository.findById(input.productId);
     if (!product) {
-      throw new EntityNotFoundError('product', productId);
+      throw new EntityNotFoundError('product', input.productId);
     }
 
-    const warehouse = await this.warehouseRepository.findById(warehouseId);
+    const warehouse = await this.warehouseRepository.findById(input.warehouseId);
     if (!warehouse) {
-      throw new EntityNotFoundError('warehouse', warehouseId);
+      throw new EntityNotFoundError('warehouse', input.warehouseId);
     }
 
-    warehouse.import(product, quantity, date);
+    warehouse.import(product, input.quantity, input.date || new Date());
     await this.warehouseRepository.save(warehouse);
 
-    this.logger.info(`Imported product #${product.id} (${quantity}) to warehouse #${warehouse.id} [${date}]`);
+    this.logger.info(`Imported product #${product.id} (${input.quantity}) to warehouse #${warehouse.id} [${input.date}]`);
   }
 }

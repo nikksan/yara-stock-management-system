@@ -8,8 +8,8 @@ import { isEqual, omit } from "lodash";
 import { Logger } from "@infrastructure/logger/Logger";
 import LoggerFactory from "@infrastructure/logger/LoggerFactory";
 
-type Input = {
-  id: Id,
+export type Input = {
+  productId: Id,
   name?: string,
   size?: Size,
   isHazardous?: boolean,
@@ -27,14 +27,14 @@ export default class UpdateProductCommand {
   }
 
   async execute(input: Input): Promise<void> {
-    const existingProduct = await this.productRepository.findById(input.id);
+    const existingProduct = await this.productRepository.findById(input.productId);
     if (!existingProduct) {
-      throw new EntityNotFoundError('product', input.id);
+      throw new EntityNotFoundError('product', input.productId);
     }
 
     if (input.size !== undefined) {
       if (!isEqual(input.size, existingProduct.getSize())) {
-        await this.makeSureProductIsNotStockedAnywhere(input.id);
+        await this.makeSureProductIsNotStockedAnywhere(input.productId);
       }
 
       existingProduct.changeSize(input.size);
@@ -42,7 +42,7 @@ export default class UpdateProductCommand {
 
     if (input.isHazardous !== undefined) {
       if (input.isHazardous !== existingProduct.getIsHazardous()) {
-        await this.makeSureProductIsNotStockedAnywhere(input.id);
+        await this.makeSureProductIsNotStockedAnywhere(input.productId);
       }
 
       existingProduct.changeIsHazardous(input.isHazardous);
@@ -53,7 +53,7 @@ export default class UpdateProductCommand {
     }
 
     await this.productRepository.save(existingProduct);
-    this.logger.info(`Updated product #${existingProduct.id}, changedProps: ${Object.keys(omit(input, ['id']))}`);
+    this.logger.info(`Updated product #${existingProduct.id}, changedProps: ${Object.keys(omit(input, ['productId']))}`);
   }
 
   private async makeSureProductIsNotStockedAnywhere(id: Id) {

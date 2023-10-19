@@ -24,7 +24,7 @@ describe('UpdateProductCommand', () => {
 
   it('should throw EntityNotFoundError when a product does not exist', async () => {
     await expect(command.execute({
-      id: IdGenerator.generate(),
+      productId: IdGenerator.generate(),
     })).rejects.toThrow(EntityNotFoundError);
   });
 
@@ -47,7 +47,7 @@ describe('UpdateProductCommand', () => {
 
     const productSize = product.getSize();
     await expect(command.execute({
-      id: product.id,
+      productId: product.id,
       size: {
         ...productSize,
         height: productSize.height + 1,
@@ -73,7 +73,7 @@ describe('UpdateProductCommand', () => {
     await warehouseRepository.save(warehouse);
 
     await expect(command.execute({
-      id: product.id,
+      productId: product.id,
       isHazardous: !product.getIsHazardous(),
     })).rejects.toThrow(OperationForbiddenError);
   });
@@ -89,7 +89,7 @@ describe('UpdateProductCommand', () => {
     await productRepository.save(product);
 
     await command.execute({
-      id: product.id,
+      productId: product.id,
       size: {
         height: 2,
         width: 1,
@@ -107,7 +107,7 @@ describe('UpdateProductCommand', () => {
     const newValue = !product.getIsHazardous();
 
     await command.execute({
-      id: product.id,
+      productId: product.id,
       isHazardous: newValue,
     });
 
@@ -121,7 +121,7 @@ describe('UpdateProductCommand', () => {
     const newValue = product.getName() + '-v2';
 
     await command.execute({
-      id: product.id,
+      productId: product.id,
       name: newValue,
     });
 
@@ -148,7 +148,7 @@ describe('UpdateProductCommand', () => {
     const newValue = product.getName() + '-v2';
 
     await command.execute({
-      id: product.id,
+      productId: product.id,
       name: newValue,
     });
 

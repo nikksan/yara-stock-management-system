@@ -44,7 +44,11 @@ describe('ExportProductFromWarehouseCommand', () => {
 
     let caughtErr;
     try {
-      await command.execute(missingProductId, seededWarehouse.id, 3);
+      await command.execute({
+        productId: missingProductId,
+        warehouseId: seededWarehouse.id,
+        quantity: 3,
+      });
     } catch (err) {
       caughtErr = err;
     }
@@ -59,7 +63,11 @@ describe('ExportProductFromWarehouseCommand', () => {
 
     let caughtErr;
     try {
-      await command.execute(seededProduct.id, missingWarehouseId, 3);
+      await command.execute({
+        productId: seededProduct.id,
+        warehouseId: missingWarehouseId,
+        quantity: 3,
+      });
     } catch (err) {
       caughtErr = err;
     }
@@ -72,7 +80,11 @@ describe('ExportProductFromWarehouseCommand', () => {
   it.each([-1, 0])('should throw TypeValidationError when the quantity is negative or zero (%s)', async (quantity) => {
     let caughtErr;
     try {
-      await command.execute(seededProduct.id, seededWarehouse.id, quantity);
+      await command.execute({
+        productId: seededProduct.id,
+        warehouseId: seededWarehouse.id,
+        quantity,
+      });
     } catch (err) {
       caughtErr = err;
     }
@@ -88,7 +100,11 @@ describe('ExportProductFromWarehouseCommand', () => {
     });
     await warehouseRepository.save(emptyWarehouse);
 
-    await expect(command.execute(seededProduct.id, emptyWarehouse.id, 1)).rejects.toThrow(ProductNotStockedError);
+    await expect(command.execute({
+      productId: seededProduct.id,
+      warehouseId: emptyWarehouse.id,
+      quantity: 1,
+    })).rejects.toThrow(ProductNotStockedError);
   });
 
   it('should throw ProductNotStockedError when the requested product is not event present in the warehouse inventory', async () => {
@@ -97,7 +113,11 @@ describe('ExportProductFromWarehouseCommand', () => {
     });
     await warehouseRepository.save(emptyWarehouse);
 
-    await expect(command.execute(seededProduct.id, emptyWarehouse.id, 1)).rejects.toThrow(ProductNotStockedError);
+    await expect(command.execute({
+      productId: seededProduct.id,
+      warehouseId: emptyWarehouse.id,
+      quantity: 1,
+    })).rejects.toThrow(ProductNotStockedError);
   });
 
   it('should throw NotEnoughQuantityError when the requested quantity exceeds the supply', async () => {
@@ -119,7 +139,11 @@ describe('ExportProductFromWarehouseCommand', () => {
     });
     await warehouseRepository.save(testWarehouse);
 
-    await expect(command.execute(testProduct.id, testWarehouse.id, 10)).rejects.toThrow(NotEnoughQuantityError);
+    await expect(command.execute({
+      productId: testProduct.id,
+      warehouseId: testWarehouse.id,
+      quantity: 10,
+    })).rejects.toThrow(NotEnoughQuantityError);
   });
 
   it('should throw NotEnoughQuantityError when the requested quantity exceeds the current supply (future supply is OK)', async () => {
@@ -152,7 +176,11 @@ describe('ExportProductFromWarehouseCommand', () => {
     });
     await warehouseRepository.save(testWarehouse);
 
-    await expect(command.execute(testProduct.id, testWarehouse.id, 10)).rejects.toThrow(NotEnoughQuantityError);
+    await expect(command.execute({
+      productId: testProduct.id,
+      warehouseId: testWarehouse.id,
+      quantity: 10,
+    })).rejects.toThrow(NotEnoughQuantityError);
   });
 
   it('should decease the quantity of the item (product remains in stock)', async () => {
@@ -175,7 +203,11 @@ describe('ExportProductFromWarehouseCommand', () => {
     });
     await warehouseRepository.save(testWarehouse);
 
-    await command.execute(testProduct.id, testWarehouse.id, 3);
+    await command.execute({
+      productId: testProduct.id,
+      warehouseId: testWarehouse.id,
+      quantity: 3,
+    });
 
     const warehouseAfterTheExport = await warehouseRepository.findById(testWarehouse.id) as Warehouse;
     expect(warehouseAfterTheExport.getInventory()).toEqual([
@@ -211,7 +243,11 @@ describe('ExportProductFromWarehouseCommand', () => {
     });
     await warehouseRepository.save(testWarehouse);
 
-    await command.execute(testProduct.id, testWarehouse.id, 5);
+    await command.execute({
+      productId: testProduct.id,
+      warehouseId: testWarehouse.id,
+      quantity: 5,
+    });
 
     const warehouseAfterTheExport = await warehouseRepository.findById(testWarehouse.id) as Warehouse;
     expect(warehouseAfterTheExport.getInventory()).toEqual([]);
@@ -247,7 +283,11 @@ describe('ExportProductFromWarehouseCommand', () => {
     });
     await warehouseRepository.save(testWarehouse);
 
-    await command.execute(testProduct.id, testWarehouse.id, 6);
+    await command.execute({
+      productId: testProduct.id,
+      warehouseId: testWarehouse.id,
+      quantity: 6,
+    });
 
     const warehouseAfterTheExport = await warehouseRepository.findById(testWarehouse.id) as Warehouse;
     expect(warehouseAfterTheExport.getInventory()).toEqual([
@@ -286,7 +326,11 @@ describe('ExportProductFromWarehouseCommand', () => {
     });
     await warehouseRepository.save(testWarehouse);
 
-    await command.execute(testProduct.id, testWarehouse.id, 3);
+    await command.execute({
+      productId: testProduct.id,
+      warehouseId: testWarehouse.id,
+      quantity: 3,
+    });
 
     expect(mockFn).toHaveBeenCalledWith(expect.objectContaining({
       type: EventType.ProductExported,

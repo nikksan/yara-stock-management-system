@@ -44,7 +44,11 @@ describe('ImportProductToWarehouseCommand', () => {
 
     let caughtErr;
     try {
-      await command.execute(missingProductId, seededWarehouse.id, 3, new Date());
+      await command.execute({
+        productId: missingProductId,
+        warehouseId: seededWarehouse.id,
+        quantity: 3,
+      });
     } catch (err) {
       caughtErr = err;
     }
@@ -59,7 +63,11 @@ describe('ImportProductToWarehouseCommand', () => {
 
     let caughtErr;
     try {
-      await command.execute(seededProduct.id, missingWarehouseId, 3, new Date());
+      await command.execute({
+        productId: seededProduct.id,
+        warehouseId: missingWarehouseId,
+        quantity: 3,
+      });
     } catch (err) {
       caughtErr = err;
     }
@@ -72,7 +80,11 @@ describe('ImportProductToWarehouseCommand', () => {
   it.each([-1, 0])('should throw TypeValidationError when the quantity is negative or zero (%s)', async (quantity) => {
     let caughtErr;
     try {
-      await command.execute(seededProduct.id, seededWarehouse.id, quantity, new Date());
+      await command.execute({
+        productId: seededProduct.id,
+        warehouseId: seededWarehouse.id,
+        quantity,
+      });
     } catch (err) {
       caughtErr = err;
     }
@@ -85,7 +97,12 @@ describe('ImportProductToWarehouseCommand', () => {
   it('should throw TypeValidationError when the date is invalid', async () => {
     let caughtErr;
     try {
-      await command.execute(seededProduct.id, seededWarehouse.id, 1, new Date('no-such-thing'));
+      await command.execute({
+        productId: seededProduct.id,
+        warehouseId: seededWarehouse.id,
+        quantity: 1,
+        date: new Date('no-such-thing')
+      });
     } catch (err) {
       caughtErr = err;
     }
@@ -124,7 +141,11 @@ describe('ImportProductToWarehouseCommand', () => {
     });
     await warehouseRepository.save(fullWarehouse);
 
-    await expect(command.execute(product2x2x2.id, fullWarehouse.id, 1, new Date())).rejects.toThrow(NotEnoughSpaceInWarehouseError);
+    await expect(command.execute({
+      productId: product2x2x2.id,
+      warehouseId: fullWarehouse.id,
+      quantity: 1,
+    })).rejects.toThrow(NotEnoughSpaceInWarehouseError);
   });
 
   it('should throw CantMixProductsError when trying to mix hazardous and non-hazardous products', async () => {
@@ -153,13 +174,22 @@ describe('ImportProductToWarehouseCommand', () => {
     });
     await warehouseRepository.save(testWarehouse);
 
-    await expect(command.execute(hazardousProduct.id, testWarehouse.id, 1, new Date())).rejects.toThrow(CantMixProductsError);
+    await expect(command.execute({
+      productId: hazardousProduct.id,
+      warehouseId: testWarehouse.id,
+      quantity: 1,
+    })).rejects.toThrow(CantMixProductsError);
   });
 
   it('should increase the product quantity in the inventory', async () => {
     const now = new Date();
 
-    await command.execute(seededProduct.id, seededWarehouse.id, 1, now);
+    await command.execute({
+      productId: seededProduct.id,
+      warehouseId: seededWarehouse.id,
+      quantity: 1,
+      date: now,
+    });
 
     const stockedWarehouse = await warehouseRepository.findById(seededWarehouse.id) as Warehouse;
     expect(stockedWarehouse.getInventory()).toEqual(expect.arrayContaining([{
@@ -178,7 +208,12 @@ describe('ImportProductToWarehouseCommand', () => {
     EventEmitter.subscribe(mockFn);
 
     const now = new Date();
-    await command.execute(seededProduct.id, seededWarehouse.id, 1, now);
+    await command.execute({
+      productId: seededProduct.id,
+      warehouseId: seededWarehouse.id,
+      quantity: 1,
+      date: now
+    });
 
     expect(mockFn).toHaveBeenCalledWith(expect.objectContaining({
       type: EventType.ProductImported,

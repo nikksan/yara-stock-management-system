@@ -6,7 +6,7 @@ import ProductRepository from "@domain/repository/ProductRepository";
 import { Logger } from "@infrastructure/logger/Logger";
 import LoggerFactory from "@infrastructure/logger/LoggerFactory";
 
-type Input = {
+export type Input = {
   name: string,
   size: Size,
   isHazardous: boolean,

@@ -23,8 +23,8 @@ export default class TypeValidator {
   }
 
   static validateQuantity(quantity: number) {
-    if (quantity <= 0 || !isFinite(quantity)) {
-      throw new TypeValidationError('quantity', quantity, 'positive finite number');
+    if (quantity <= 0 || !isFinite(quantity) || (quantity % 1 !== 0)) {
+      throw new TypeValidationError('quantity', quantity, 'positive finite integer');
     }
   }
 
