@@ -47,13 +47,12 @@ export default class SequelizeAuditLog implements AuditLog {
 
   private mapSearchParamsToWhereOptions(params: SearchParams) {
     const whereOptions: WhereOptions<EventAttributes> = {};
-
     if (params.types !== undefined) {
       whereOptions.type = params.types;
     }
 
     if (params.createdAt !== undefined) {
-      whereOptions.$createdAt$ = {
+      whereOptions.createdAt = {
         [Op.between]: params.createdAt,
       }
     }
