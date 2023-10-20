@@ -1,5 +1,5 @@
 export default class UniqueConstraintError extends Error {
-  constructor(path: string) {
+  constructor(public path: string) {
     super(`Unique constraint field for ${path} failed!`);
   }
 }

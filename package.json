@@ -9,7 +9,8 @@
     "db:migrate": "./sequelize-cli db:migrate",
     "db:migrate:new": "./sequelize-cli migration:create --name",
     "watch": "jest --watch --bail --coverage=false --globalSetup=''",
-    "test": "jest"
+    "watch:int": "jest --watch --bail --coverage=false",
+    "test": "jest --runInBand"
   },
   "keywords": [],
   "author": "",

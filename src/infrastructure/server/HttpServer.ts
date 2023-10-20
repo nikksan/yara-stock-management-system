@@ -16,6 +16,17 @@ import { Input as ExportProductFromWarehouseInput } from "@application/command/E
 import { Input as ImportProductToWarehouseInput } from "@application/command/ImportProductToWarehouseCommand";
 import { Input as CreateProductInput } from "@application/command/CreateProductCommand";
 import { Input as UpdateProductInput } from "@application/command/UpdateProductCommand";
+import { unwrapResolverError } from '@apollo/server/errors';
+import EntityNotFoundError from '@application/errors/EntityNotFoundError';
+import OperationForbiddenError from '@application/errors/OperationForbiddenError';
+import CantMixProductsError from '@domain/errors/CantMixProductsError';
+import NotEnoughQuantityError from '@domain/errors/NotEnoughQuantityError';
+import NotEnoughSpaceInWarehouseError from '@domain/errors/NotEnoughSpaceInWarehouseError';
+import ProductNotStockedError from '@domain/errors/ProductNotStockedError';
+import TypeValidationError from '@domain/model/validation/TypeValidationError';
+import ErrorCode from './ErrorCode';
+import UniqueConstraintError from '@application/errors/UniqueConstraintError';
+import { GraphQLError } from 'graphql';
 
 export default class HttpServer {
   private logger: Logger;
@@ -62,11 +73,11 @@ export default class HttpServer {
           return this.warehouseController.getStatus(input.warehouseId);
         },
 
-        listProducts: async(_: unknown, input: PaginationOpts) => {
+        listProducts: async (_: unknown, input: PaginationOpts) => {
           return this.productController.list(input);
         },
 
-        getHistoricImportsAndExports: async(_: unknown, input: GetHistoricImportsAndExportsInput) => {
+        getHistoricImportsAndExports: async (_: unknown, input: GetHistoricImportsAndExportsInput) => {
           return this.eventController.getHistoricImportsAndExports(input);
         }
       },
@@ -100,8 +111,87 @@ export default class HttpServer {
   }
 
   private formatError(_: unknown, e: unknown) {
-    const error = e as Error;
+    const originalError = unwrapResolverError(e) as Error;
 
-    return { message: error.message };
+    switch (true) {
+      case unwrapResolverError(e) instanceof TypeValidationError:
+        return {
+          code: ErrorCode.TypeValidation,
+          message: originalError.message,
+          details: {
+            path: (originalError as TypeValidationError).path,
+            value: (originalError as TypeValidationError).value,
+            expectedType: (originalError as TypeValidationError).expectedType,
+          }
+        };
+
+      case originalError instanceof EntityNotFoundError:
+        return {
+          code: ErrorCode.EntityNotFound,
+          message: originalError.message,
+          details: {
+            entityType: (originalError as EntityNotFoundError).entityType,
+            id: (originalError as EntityNotFoundError).id,
+          }
+        };
+
+      case originalError instanceof OperationForbiddenError:
+        return {
+          code: ErrorCode.OperationForbidden,
+          message: originalError.message,
+        };
+
+      case originalError instanceof UniqueConstraintError:
+        return {
+          code: ErrorCode.UniqueConstraint,
+          message: originalError.message,
+          details: {
+            path: (originalError as UniqueConstraintError).path,
+          }
+        };
+
+      case originalError instanceof CantMixProductsError:
+        return {
+          code: ErrorCode.CantMixProducts,
+          message: originalError.message,
+        };
+
+      case originalError instanceof NotEnoughQuantityError:
+        return {
+          code: ErrorCode.NotEnoughQuantity,
+          message: originalError.message,
+          details: {
+            availableQuantity: (originalError as NotEnoughQuantityError).availableQuantity,
+          }
+        };
+
+      case originalError instanceof NotEnoughSpaceInWarehouseError:
+        return {
+          code: ErrorCode.NotEnoughSpaceInWarehouse,
+          message: originalError.message,
+        };
+
+      case originalError instanceof ProductNotStockedError:
+        return {
+          code: ErrorCode.ProductNotStocked,
+          message: originalError.message,
+        };
+
+      case (
+        originalError instanceof GraphQLError &&
+        originalError.message.startsWith('Variable')
+      ):
+        return {
+          code: ErrorCode.TypeValidation,
+          message: originalError.message,
+        };
+
+      default:
+        return {
+          code: ErrorCode.General,
+          message: originalError.message,
+        };
+    }
+
   }
 }
