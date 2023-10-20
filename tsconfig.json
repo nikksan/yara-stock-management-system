@@ -22,9 +22,6 @@
       "@infrastructure/*": [
         "src/infrastructure/*"
       ],
-      "@interface/*": [
-        "src/interface/*"
-      ],
       "@config/*": [
         "src/config/*"
       ]

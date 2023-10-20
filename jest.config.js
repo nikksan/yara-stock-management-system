@@ -21,5 +21,6 @@ module.exports = {
   watchPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/docs/'],
   modulePathIgnorePatterns: ['node_modules'],
   moduleFileExtensions: ['ts', 'js'],
-  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>' }),
+  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: `<rootDir>` }),
+  globalSetup: '<rootDir>/tests/dbSetupWithNodeWrapper.ts',
 };

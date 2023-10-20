@@ -19,6 +19,7 @@ import { Input as UpdateProductInput } from "@application/command/UpdateProductC
 
 export default class HttpServer {
   private logger: Logger;
+  private apolloServer: ApolloServer;
 
   constructor(
     private warehouseController: WarehouseController,
@@ -28,10 +29,7 @@ export default class HttpServer {
     loggerFactory: LoggerFactory,
   ) {
     this.logger = loggerFactory.create(this.constructor.name);
-  }
-
-  async start(): Promise<void> {
-    const server = new ApolloServer({
+    this.apolloServer = new ApolloServer({
       typeDefs: [
         ...scalarTypeDefs,
         typeDefs,
@@ -39,12 +37,18 @@ export default class HttpServer {
       resolvers: this.createResolvers(),
       formatError: this.formatError,
     });
+  }
 
-    const { url } = await startStandaloneServer(server, {
+  async start(): Promise<void> {
+    const { url } = await startStandaloneServer(this.apolloServer, {
       listen: { port: this.config.port },
     });
 
     this.logger.info(`Apollo server listening on url: ${url}`);
+  }
+
+  getApolloServer() {
+    return this.apolloServer;
   }
 
   private createResolvers() {

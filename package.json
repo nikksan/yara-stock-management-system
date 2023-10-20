@@ -5,9 +5,10 @@
   "main": "src/index.js",
   "scripts": {
     "start": "npm run db:migrate && ts-node -r tsconfig-paths/register src/index.ts",
+    "setup-db": "ts-node -r tsconfig-paths/register tests/scripts/setup-db.ts",
     "db:migrate": "./sequelize-cli db:migrate",
     "db:migrate:new": "./sequelize-cli migration:create --name",
-    "watch": "jest --watch --bail",
+    "watch": "jest --watch --bail --coverage=false --globalSetup=''",
     "test": "jest"
   },
   "keywords": [],

@@ -1,11 +1,8 @@
 import { loadConfig } from "@config/index";
-import { prepareDb } from "../../../../utils/dbSetup";
 import { Sequelize } from "sequelize";
 import EntityFactory from "../../../../utils/entity-factory/EntityFactory";
 import LoggerFactory from "@infrastructure/logger/LoggerFactory";
 import SequelizeWarehouseRepository from "@infrastructure/storage/sequelize/SequelizeWarehouseRepository";
-
-prepareDb();
 
 describe('SequelizeWarehouseRepository', () => {
   const config = loadConfig();

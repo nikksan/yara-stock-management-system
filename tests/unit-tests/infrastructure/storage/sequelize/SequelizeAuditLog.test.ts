@@ -2,11 +2,8 @@ import { loadConfig } from "@config/index";
 import LoggerFactory from "@infrastructure/logger/LoggerFactory";
 import SequelizeAuditLog from "@infrastructure/storage/sequelize/SequelizeAuditLog";
 import { Sequelize } from "sequelize";
-import { prepareDb } from "../../../../utils/dbSetup";
 import EventFactory from "../../../../utils/event-factory/EventFactory";
 import { EventType } from "@domain/event/Event";
-
-prepareDb();
 
 describe('SequelizeAuditLog', () => {
   const config = loadConfig();
