@@ -5,14 +5,57 @@ export default `#graphql
     length: Float!
   }
 
+  type InventoryItemProduct {
+    id: ID!
+    size: Size!
+    isHazardous: Boolean!
+  }
+
+  type InventoryItem {
+    product: InventoryItemProduct!
+    quantity: Int!
+    importedAt: DateTime!
+  }
+
   type Warehouse {
     id: String!
     name: String!
     size: Size!
+    inventory: [InventoryItem!]!
+  }
+
+  type Product {
+    id: ID!
+    name: String!
+    size: Size!
+    isHazardous: Boolean!
+  }
+
+  type PaginatedProducts {
+    total: Int!
+    items: [Product!]!
+  }
+
+  type SpaceStats {
+    currentUsedUpSpace: Float!
+    totalUsedUpSpace: Float!
+    totalSpace: Float!
+    freeSpace: Float!
+  }
+
+  type Event {
+    id: String!
+    type: String!
+    createdAt: DateTime!
   }
 
   type Query {
-    getWarehouses: [Warehouse]
+    listWarehouses: [Warehouse!]!
+    getWarehouseStats(warehouseId: ID!): SpaceStats!
+
+    listProducts(page: Int!, limit: Int!): PaginatedProducts!
+
+    getHistoricImportsAndExports(warehouseIds: [ID!], date: Date): [Event!]!
   }
 
   input SizeInput {

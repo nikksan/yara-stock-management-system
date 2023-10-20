@@ -34,8 +34,8 @@ describe('ListProductsQuery', () => {
     const { items } = await query.run({ page: 2, limit: 3 });
 
     expect(items.length).toEqual(3);
-    expect(items[0].getName()).toEqual('p4');
-    expect(items[1].getName()).toEqual('p5');
-    expect(items[2].getName()).toEqual('p6');
+    expect(items[0].name).toEqual('p4');
+    expect(items[1].name).toEqual('p5');
+    expect(items[2].name).toEqual('p6');
   });
 });

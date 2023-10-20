@@ -2,8 +2,9 @@ import CreateWarehouseCommand, { Input as CreateWarehouseInput } from "@applicat
 import DeleteWarehouseCommand from "@application/command/DeleteWarehouseCommand";
 import ExportProductFromWarehouseCommand, { Input as ExportProductFromWarehouseInput } from "@application/command/ExportProductFromWarehouseCommand";
 import ImportProductToWarehouseCommand, { Input as ImportProductToWarehouseInput } from "@application/command/ImportProductToWarehouseCommand";
+import GetWarehouseStatsQuery from "@application/query/GetWarehouseStatsQuery";
+import ListWarehousesQuery from "@application/query/ListWarehousesQuery";
 import { Id } from "@domain/model/Entity";
-import { assert } from "typia";
 
 export default class WarehouseController {
   constructor(
@@ -11,25 +12,32 @@ export default class WarehouseController {
     private deleteWarehouseCommand: DeleteWarehouseCommand,
     private exportProductFromWarehouseCommand: ExportProductFromWarehouseCommand,
     private importProductToWarehouseCommand: ImportProductToWarehouseCommand,
+
+    private listWarehousesQuery: ListWarehousesQuery,
+    private getWarehouseStatsQuery: GetWarehouseStatsQuery,
   ) {}
 
-  async create(input: unknown): Promise<Id> {
-    const validatedInput = assert<CreateWarehouseInput>(input);
-    return this.createWarehouseCommand.execute(validatedInput);
+  async create(input: CreateWarehouseInput): Promise<Id> {
+    return this.createWarehouseCommand.execute(input);
   }
 
-  async delete(input: unknown): Promise<void> {
-    const validatedInput = assert<{ warehouseId: Id }>(input);
-    return this.deleteWarehouseCommand.execute(validatedInput.warehouseId);
+  async delete(id: Id): Promise<void> {
+    return this.deleteWarehouseCommand.execute(id);
   }
 
-  async exportProduct(input: unknown): Promise<void> {
-    const validatedInput = assert<ExportProductFromWarehouseInput>(input);
-    return this.exportProductFromWarehouseCommand.execute(validatedInput);
+  async exportProduct(input: ExportProductFromWarehouseInput): Promise<void> {
+    return this.exportProductFromWarehouseCommand.execute(input);
   }
 
-  async importProduct(input: unknown): Promise<void> {
-    const validatedInput = assert<ImportProductToWarehouseInput>(input);
-    return this.importProductToWarehouseCommand.execute(validatedInput);
+  async importProduct(input: ImportProductToWarehouseInput): Promise<void> {
+    return this.importProductToWarehouseCommand.execute(input);
+  }
+
+  async list() {
+    return this.listWarehousesQuery.run();
+  }
+
+  async getStatus(warehouseId: Id) {
+    return this.getWarehouseStatsQuery.run(warehouseId);
   }
 }

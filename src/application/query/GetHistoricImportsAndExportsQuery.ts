@@ -3,7 +3,7 @@ import AuditLog from "@domain/audit-log/AuditLog";
 import Event, { EventType } from "@domain/event/Event";
 import { Id } from "@domain/model/Entity";
 
-type Input = {
+export type Input = {
   warehouseIds?: Array<Id>,
   date?: Date,
 }

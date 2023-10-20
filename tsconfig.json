@@ -29,11 +29,6 @@
         "src/config/*"
       ]
     },
-    "plugins": [
-      {
-        "transform": "typia/lib/transform"
-      }
-    ],
     "strictNullChecks": true
   },
   "include": [

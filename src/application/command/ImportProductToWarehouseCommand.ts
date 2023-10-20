@@ -37,6 +37,6 @@ export default class ImportProductToWarehouseCommand {
     warehouse.import(product, input.quantity, input.date || new Date());
     await this.warehouseRepository.save(warehouse);
 
-    this.logger.info(`Imported product #${product.id} (${input.quantity}) to warehouse #${warehouse.id} [${input.date}]`);
+    this.logger.info(`Imported product #${product.id} (${input.quantity}) to warehouse #${warehouse.id} [${input.date || 'right now'}]`);
   }
 }

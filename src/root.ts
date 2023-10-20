@@ -1,5 +1,5 @@
 import LoggerFactory from "@infrastructure/logger/LoggerFactory";
-import { InjectionMode, asClass, asValue, createContainer } from "awilix";
+import { InjectionMode, Lifetime, asClass, asValue, createContainer } from "awilix";
 import { loadConfig } from "./config";
 import { Sequelize } from "sequelize";
 import SequelizeWarehouseRepository from "@infrastructure/storage/sequelize/SequelizeWarehouseRepository";
@@ -36,7 +36,10 @@ container.loadModules([
   __dirname + '/application/query/*.ts',
   __dirname + '/infrastructure/controller/*.ts',
 ], {
-  formatName: 'camelCase'
+  formatName: 'camelCase',
+  resolverOptions: {
+    lifetime: Lifetime.SINGLETON,
+  }
 });
 
 container.register({

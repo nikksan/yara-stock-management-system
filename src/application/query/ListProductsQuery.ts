@@ -1,4 +1,4 @@
-import Product from "@domain/model/Product";
+import DTOGenerator, { ProductDTO } from "@application/service/DTOGenerator";
 import ProductRepository from "@domain/repository/ProductRepository";
 import { Paginated, PaginationOpts } from "@domain/repository/Repository";
 
@@ -7,7 +7,12 @@ export default class ListProductsQuery {
     private productRepository: ProductRepository,
   ) {}
 
-  async run(opts: PaginationOpts): Promise<Paginated<Product>> {
-    return this.productRepository.findAndCountByCriteria(opts);
+  async run(opts: PaginationOpts): Promise<Paginated<ProductDTO>> {
+    const { items: products , total } = await this.productRepository.findAndCountByCriteria(opts);
+
+    return {
+      items: products.map(product => DTOGenerator.generateFromProduct(product)),
+      total,
+    };
   }
 }
