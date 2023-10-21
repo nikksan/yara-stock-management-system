@@ -43,9 +43,29 @@ export default `#graphql
     freeSpace: Float!
   }
 
+  type EventProductData {
+    id: String!
+    name: String!
+    size: Size!
+    isHazardous: Boolean!
+  }
+
+  type EventWarehouseData {
+    id: String!
+    name: String!
+  }
+
+  type EventData {
+    product: EventProductData!
+    warehouse: EventWarehouseData!,
+    importedAt: DateTime
+    quantity: Int!,
+  }
+
   type Event {
     id: String!
     type: String!
+    data: EventData!
     createdAt: DateTime!
   }
 
