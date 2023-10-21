@@ -1,8 +1,8 @@
-import { DeepPartial } from "ts-essentials";
+import { DeepPartial } from 'ts-essentials';
 import Product, { ConstructorParams as ProductConstructorParams } from '@domain/model/Product';
 import Warehouse, { ConstructorParams as WarehouseConstructorParams } from '@domain/model/Warehouse';
-import { merge } from "lodash";
-import IdGenerator from "@domain/model/IdGenerator";
+import { merge } from 'lodash';
+import IdGenerator from '@domain/model/IdGenerator';
 
 export default class EntityFactory {
   createProduct(override: DeepPartial<ProductConstructorParams> = {}): Product {

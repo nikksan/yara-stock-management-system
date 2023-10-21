@@ -1,8 +1,8 @@
-import Size from "../Size";
-import TypeValidationError from "./TypeValidationError";
+import Size from '../Size';
+import TypeValidationError from './TypeValidationError';
 
 export default class TypeValidator {
-  static validateSize(size: Size) {
+  static validateSize(size: Size): void {
     if (size.width <= 0 || !isFinite(size.width)) {
       throw new TypeValidationError('size.width', size.width, 'valid dimension');
     }
@@ -16,19 +16,19 @@ export default class TypeValidator {
     }
   }
 
-  static validateName(name: string) {
+  static validateName(name: string): void {
     if (name.trim().length === 0 || name.length > 64) { // todo: tests for max length
       throw new TypeValidationError('name', name, 'non-empty string up to 64 chars');
     }
   }
 
-  static validateQuantity(quantity: number) {
+  static validateQuantity(quantity: number): void {
     if (quantity <= 0 || !isFinite(quantity) || (quantity % 1 !== 0)) {
       throw new TypeValidationError('quantity', quantity, 'positive finite integer');
     }
   }
 
-  static validateDate(date: Date) {
+  static validateDate(date: Date): void {
     if (date.toString() === 'Invalid Date') {
       throw new TypeValidationError('date', date, 'valid date');
     }

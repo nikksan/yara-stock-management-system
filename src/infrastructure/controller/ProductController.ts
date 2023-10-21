@@ -1,10 +1,10 @@
-import CreateProductCommand, { Input as CreateProductInput } from "@application/command/CreateProductCommand";
-import DeleteProductCommand from "@application/command/DeleteProductCommand";
-import UpdateProductCommand, { Input as UpdateProductInput } from "@application/command/UpdateProductCommand";
-import ListProductsQuery from "@application/query/ListProductsQuery";
-import { ProductDTO } from "@application/service/DTOGenerator";
-import { Id } from "@domain/model/Entity";
-import { Paginated, PaginationOpts } from "@domain/repository/Repository";
+import CreateProductCommand, { Input as CreateProductInput } from '@application/command/CreateProductCommand';
+import DeleteProductCommand from '@application/command/DeleteProductCommand';
+import UpdateProductCommand, { Input as UpdateProductInput } from '@application/command/UpdateProductCommand';
+import ListProductsQuery from '@application/query/ListProductsQuery';
+import { ProductDTO } from '@application/service/DTOGenerator';
+import { Id } from '@domain/model/Entity';
+import { Paginated, PaginationOpts } from '@domain/repository/Repository';
 
 export default class ProductController {
   constructor(

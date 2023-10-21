@@ -1,10 +1,10 @@
-import UniqueConstraintError from "@application/errors/UniqueConstraintError";
-import { Id } from "@domain/model/Entity";
-import Warehouse from "@domain/model/Warehouse";
-import Size from "@domain/model/Size";
-import WarehouseRepository from "@domain/repository/WarehouseRepository";
-import LoggerFactory from "@infrastructure/logger/LoggerFactory";
-import { Logger } from "@infrastructure/logger/Logger";
+import UniqueConstraintError from '@application/errors/UniqueConstraintError';
+import { Id } from '@domain/model/Entity';
+import Warehouse from '@domain/model/Warehouse';
+import Size from '@domain/model/Size';
+import WarehouseRepository from '@domain/repository/WarehouseRepository';
+import LoggerFactory from '@infrastructure/logger/LoggerFactory';
+import { Logger } from '@infrastructure/logger/Logger';
 
 export type Input = {
   name: string,
@@ -38,4 +38,4 @@ export default class CreateWarehouseCommand {
 
     return warehouse.id;
   }
-};
+}

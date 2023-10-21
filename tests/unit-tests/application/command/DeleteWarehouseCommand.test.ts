@@ -1,10 +1,10 @@
-import DeleteWarehouseCommand from "@application/command/DeleteWarehouseCommand";
-import EntityFactory from "../../../utils/entity-factory/EntityFactory";
-import InMemoryWarehouseRepository from "../../../utils/in-memory-repos/InMemoryWarehouseRepository";
-import IdGenerator from "@domain/model/IdGenerator";
-import EntityNotFoundError from "@application/errors/EntityNotFoundError";
-import LoggerFactory from "@infrastructure/logger/LoggerFactory";
-import { loadConfig } from "@config/index";
+import DeleteWarehouseCommand from '@application/command/DeleteWarehouseCommand';
+import EntityFactory from '../../../utils/entity-factory/EntityFactory';
+import InMemoryWarehouseRepository from '../../../utils/in-memory-repos/InMemoryWarehouseRepository';
+import IdGenerator from '@domain/model/IdGenerator';
+import EntityNotFoundError from '@application/errors/EntityNotFoundError';
+import LoggerFactory from '@infrastructure/logger/LoggerFactory';
+import { loadConfig } from '@config/index';
 
 describe('DeleteWarehouseCommand', () => {
   const warehouseRepository = new InMemoryWarehouseRepository();

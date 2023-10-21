@@ -46,7 +46,7 @@ describe('Export product from warehouse', () => {
         productId: IdGenerator.generate(),
         warehouseId: warehouse.id,
         quantity: 1,
-      }
+      },
     });
 
     assert(response.body.kind === 'single');
@@ -55,7 +55,7 @@ describe('Export product from warehouse', () => {
       code: 'ENTITY_NOT_FOUND',
       details: expect.objectContaining({
         entityType: 'product',
-      })
+      }),
     }));
   });
 
@@ -81,7 +81,7 @@ describe('Export product from warehouse', () => {
         productId: product.id,
         warehouseId: IdGenerator.generate(),
         quantity: 1,
-      }
+      },
     });
 
     assert(response.body.kind === 'single');
@@ -90,7 +90,7 @@ describe('Export product from warehouse', () => {
       code: 'ENTITY_NOT_FOUND',
       details: expect.objectContaining({
         entityType: 'warehouse',
-      })
+      }),
     }));
   });
 
@@ -119,7 +119,7 @@ describe('Export product from warehouse', () => {
         productId: product.id,
         warehouseId: warehouse.id,
         quantity,
-      }
+      },
     });
 
     assert(response.body.kind === 'single');
@@ -134,7 +134,7 @@ describe('Export product from warehouse', () => {
     await productRepository.save(product);
 
     const warehouse = entityFactory.createWarehouse({
-      inventory: []
+      inventory: [],
     });
     await warehouseRepository.save(warehouse);
 
@@ -156,7 +156,7 @@ describe('Export product from warehouse', () => {
         productId: product.id,
         warehouseId: warehouse.id,
         quantity: 10,
-      }
+      },
     });
 
     assert(response.body.kind === 'single');
@@ -175,11 +175,11 @@ describe('Export product from warehouse', () => {
         product: {
           id: product.id,
           isHazardous: product.getIsHazardous(),
-          size: product.getSize()
+          size: product.getSize(),
         },
         quantity: 5,
         importedAt: new Date(),
-      }]
+      }],
     });
     await warehouseRepository.save(warehouse);
 
@@ -201,7 +201,7 @@ describe('Export product from warehouse', () => {
         productId: product.id,
         warehouseId: warehouse.id,
         quantity: 10,
-      }
+      },
     });
 
     assert(response.body.kind === 'single');
@@ -220,11 +220,11 @@ describe('Export product from warehouse', () => {
         product: {
           id: product.id,
           isHazardous: product.getIsHazardous(),
-          size: product.getSize()
+          size: product.getSize(),
         },
         quantity: 5,
         importedAt: new Date(),
-      }]
+      }],
     });
     await warehouseRepository.save(warehouse);
 
@@ -246,7 +246,7 @@ describe('Export product from warehouse', () => {
         productId: product.id,
         warehouseId: warehouse.id,
         quantity: 5,
-      }
+      },
     });
 
     assert(response.body.kind === 'single');
@@ -264,11 +264,11 @@ describe('Export product from warehouse', () => {
         product: {
           id: product.id,
           isHazardous: product.getIsHazardous(),
-          size: product.getSize()
+          size: product.getSize(),
         },
         quantity: 5,
         importedAt: new Date(),
-      }]
+      }],
     });
     await warehouseRepository.save(warehouse);
 
@@ -290,11 +290,11 @@ describe('Export product from warehouse', () => {
         productId: product.id,
         warehouseId: warehouse.id,
         quantity: 5,
-      }
+      },
     });
 
     const events = await auditLog.search({
-      types: [EventType.ProductExported]
+      types: [EventType.ProductExported],
     });
 
     expect(events.length).toEqual(1);

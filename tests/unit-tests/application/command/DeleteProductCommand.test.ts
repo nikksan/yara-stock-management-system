@@ -1,12 +1,12 @@
-import DeleteProductCommand from "@application/command/DeleteProductCommand";
-import InMemoryProductRepository from "../../../utils/in-memory-repos/InMemoryProductRepository";
-import EntityFactory from "../../../utils/entity-factory/EntityFactory";
-import InMemoryWarehouseRepository from "../../../utils/in-memory-repos/InMemoryWarehouseRepository";
-import IdGenerator from "@domain/model/IdGenerator";
-import EntityNotFoundError from "@application/errors/EntityNotFoundError";
-import OperationForbiddenError from "@application/errors/OperationForbiddenError";
-import LoggerFactory from "@infrastructure/logger/LoggerFactory";
-import { loadConfig } from "@config/index";
+import DeleteProductCommand from '@application/command/DeleteProductCommand';
+import InMemoryProductRepository from '../../../utils/in-memory-repos/InMemoryProductRepository';
+import EntityFactory from '../../../utils/entity-factory/EntityFactory';
+import InMemoryWarehouseRepository from '../../../utils/in-memory-repos/InMemoryWarehouseRepository';
+import IdGenerator from '@domain/model/IdGenerator';
+import EntityNotFoundError from '@application/errors/EntityNotFoundError';
+import OperationForbiddenError from '@application/errors/OperationForbiddenError';
+import LoggerFactory from '@infrastructure/logger/LoggerFactory';
+import { loadConfig } from '@config/index';
 
 describe('DeleteProductCommand', () => {
   const productRepository = new InMemoryProductRepository();
@@ -38,7 +38,7 @@ describe('DeleteProductCommand', () => {
           size: product.getSize(),
         },
         quantity: 3,
-      }]
+      }],
     });
     await warehouseRepository.save(warehouse);
 

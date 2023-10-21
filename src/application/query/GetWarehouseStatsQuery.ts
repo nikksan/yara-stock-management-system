@@ -1,7 +1,7 @@
-import { Id } from "@domain/model/Entity";
-import WarehouseRepository from "@domain/repository/WarehouseRepository";
-import { SpaceStats } from "@domain/model/Warehouse";
-import EntityNotFoundError from "@application/errors/EntityNotFoundError";
+import { Id } from '@domain/model/Entity';
+import WarehouseRepository from '@domain/repository/WarehouseRepository';
+import { SpaceStats } from '@domain/model/Warehouse';
+import EntityNotFoundError from '@application/errors/EntityNotFoundError';
 
 export default class GetWarehouseStatsQuery {
   constructor(

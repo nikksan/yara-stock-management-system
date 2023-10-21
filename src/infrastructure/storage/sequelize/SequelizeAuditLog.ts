@@ -1,9 +1,9 @@
-import AuditLog, { SearchParams } from "@domain/audit-log/AuditLog";
-import createModel, { EventDB, EventAttributes, EventDAO } from "./models/EventDB";
-import { Logger } from "@infrastructure/logger/Logger";
-import { Op, Sequelize, WhereOptions } from "sequelize";
-import LoggerFactory from "@infrastructure/logger/LoggerFactory";
-import Event from "@domain/event/Event";
+import AuditLog, { SearchParams } from '@domain/audit-log/AuditLog';
+import createModel, { EventDB, EventAttributes, EventDAO } from './models/EventDB';
+import { Logger } from '@infrastructure/logger/Logger';
+import { Op, Sequelize, WhereOptions } from 'sequelize';
+import LoggerFactory from '@infrastructure/logger/LoggerFactory';
+import Event from '@domain/event/Event';
 import lodash from 'lodash';
 
 type PlainObject = Record<string, unknown>;
@@ -54,12 +54,14 @@ export default class SequelizeAuditLog implements AuditLog {
     if (params.createdAt !== undefined) {
       whereOptions.createdAt = {
         [Op.between]: params.createdAt,
-      }
+      };
     }
+
 
     if (params.data !== undefined) {
       whereOptions.data = {
         [Op.contains]: params.data,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } as any;
     }
 
@@ -72,7 +74,7 @@ export default class SequelizeAuditLog implements AuditLog {
       type: event.type,
       data: event.data,
       createdAt: event.createdAt,
-    }
+    };
   }
 
   private mapDAOToEvent(eventDAO: EventDAO): Event {

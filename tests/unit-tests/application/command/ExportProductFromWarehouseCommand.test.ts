@@ -1,17 +1,17 @@
-import ExportProductFromWarehouseCommand from "@application/command/ExportProductFromWarehouseCommand";
-import InMemoryWarehouseRepository from "../../../utils/in-memory-repos/InMemoryWarehouseRepository";
-import InMemoryProductRepository from "../../../utils/in-memory-repos/InMemoryProductRepository";
-import IdGenerator from "@domain/model/IdGenerator";
-import EntityNotFoundError from "@application/errors/EntityNotFoundError";
-import EntityFactory from "../../../utils/entity-factory/EntityFactory";
-import TypeValidationError from "@domain/model/validation/TypeValidationError";
-import Warehouse from "@domain/model/Warehouse";
-import EventEmitter from "@domain/event/EventEmitter";
-import { EventType } from "@domain/event/Event";
-import ProductNotStockedError from "@domain/errors/ProductNotStockedError";
-import NotEnoughQuantityError from "@domain/errors/NotEnoughQuantityError";
-import LoggerFactory from "@infrastructure/logger/LoggerFactory";
-import { loadConfig } from "@config/index";
+import ExportProductFromWarehouseCommand from '@application/command/ExportProductFromWarehouseCommand';
+import InMemoryWarehouseRepository from '../../../utils/in-memory-repos/InMemoryWarehouseRepository';
+import InMemoryProductRepository from '../../../utils/in-memory-repos/InMemoryProductRepository';
+import IdGenerator from '@domain/model/IdGenerator';
+import EntityNotFoundError from '@application/errors/EntityNotFoundError';
+import EntityFactory from '../../../utils/entity-factory/EntityFactory';
+import TypeValidationError from '@domain/model/validation/TypeValidationError';
+import Warehouse from '@domain/model/Warehouse';
+import EventEmitter from '@domain/event/EventEmitter';
+import { EventType } from '@domain/event/Event';
+import ProductNotStockedError from '@domain/errors/ProductNotStockedError';
+import NotEnoughQuantityError from '@domain/errors/NotEnoughQuantityError';
+import LoggerFactory from '@infrastructure/logger/LoggerFactory';
+import { loadConfig } from '@config/index';
 
 describe('ExportProductFromWarehouseCommand', () => {
   const warehouseRepository = new InMemoryWarehouseRepository();
@@ -133,8 +133,8 @@ describe('ExportProductFromWarehouseCommand', () => {
             size: testProduct.getSize(),
           },
           quantity: 5,
-          importedAt: new Date()
-        }
+          importedAt: new Date(),
+        },
       ],
     });
     await warehouseRepository.save(testWarehouse);
@@ -161,7 +161,7 @@ describe('ExportProductFromWarehouseCommand', () => {
             size: testProduct.getSize(),
           },
           quantity: 5,
-          importedAt: new Date()
+          importedAt: new Date(),
         },
         {
           product: {
@@ -171,7 +171,7 @@ describe('ExportProductFromWarehouseCommand', () => {
           },
           quantity: 7,
           importedAt: tomorrow,
-        }
+        },
       ],
     });
     await warehouseRepository.save(testWarehouse);
@@ -346,7 +346,7 @@ describe('ExportProductFromWarehouseCommand', () => {
           name: testWarehouse.getName(),
         },
         quantity: 3,
-      }
+      },
     }));
   });
 });

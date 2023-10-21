@@ -1,6 +1,6 @@
-import Product from "@domain/model/Product";
-import Size from "@domain/model/Size";
-import Warehouse, { Inventory } from "@domain/model/Warehouse";
+import Product from '@domain/model/Product';
+import Size from '@domain/model/Size';
+import Warehouse, { Inventory } from '@domain/model/Warehouse';
 
 export type WarehouseDTO = {
   id: string,
@@ -23,7 +23,7 @@ export default class DTOGenerator {
       name: warehouse.getName(),
       size: warehouse.getSize(),
       inventory: warehouse.getInventory(),
-    }
+    };
   }
 
   static generateFromProduct(product: Product): ProductDTO {
@@ -32,6 +32,6 @@ export default class DTOGenerator {
       name: product.getName(),
       size: product.getSize(),
       isHazardous: product.getIsHazardous(),
-    }
+    };
   }
 }

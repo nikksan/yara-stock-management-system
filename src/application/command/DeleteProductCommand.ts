@@ -1,10 +1,10 @@
-import EntityNotFoundError from "@application/errors/EntityNotFoundError";
-import OperationForbiddenError from "@application/errors/OperationForbiddenError";
-import { Id } from "@domain/model/Entity";
-import ProductRepository from "@domain/repository/ProductRepository";
-import WarehouseRepository from "@domain/repository/WarehouseRepository";
-import { Logger } from "@infrastructure/logger/Logger";
-import LoggerFactory from "@infrastructure/logger/LoggerFactory";
+import EntityNotFoundError from '@application/errors/EntityNotFoundError';
+import OperationForbiddenError from '@application/errors/OperationForbiddenError';
+import { Id } from '@domain/model/Entity';
+import ProductRepository from '@domain/repository/ProductRepository';
+import WarehouseRepository from '@domain/repository/WarehouseRepository';
+import { Logger } from '@infrastructure/logger/Logger';
+import LoggerFactory from '@infrastructure/logger/LoggerFactory';
 
 export default class DeleteProductCommand {
   private logger: Logger;
@@ -25,11 +25,11 @@ export default class DeleteProductCommand {
 
     const warehousesStockedWithTheProduct = await this.warehouseRepository.findAllByProductId(id);
     if (warehousesStockedWithTheProduct.length) {
-      throw new OperationForbiddenError(`product #${id} is stocked in warehouses - ${warehousesStockedWithTheProduct.map(warehouse => warehouse.id)}`);
+      throw new OperationForbiddenError(`product #${id} is stocked in warehouses - ${warehousesStockedWithTheProduct.map((warehouse) => warehouse.id)}`);
     }
 
     await this.productRepository.delete(existingProduct);
 
     this.logger.info(`Deleted product #${existingProduct.id}`);
   }
-};
+}

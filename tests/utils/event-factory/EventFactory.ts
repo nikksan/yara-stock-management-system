@@ -1,9 +1,9 @@
-import { DeepPartial } from "ts-essentials";
-import { merge } from "lodash";
-import IdGenerator from "@domain/model/IdGenerator";
-import ProductImportedEvent from "@domain/event/ProductImportedEvent";
-import { EventType } from "@domain/event/Event";
-import ProductExportedEvent from "@domain/event/ProductExportedEvent";
+import { DeepPartial } from 'ts-essentials';
+import { merge } from 'lodash';
+import IdGenerator from '@domain/model/IdGenerator';
+import ProductImportedEvent from '@domain/event/ProductImportedEvent';
+import { EventType } from '@domain/event/Event';
+import ProductExportedEvent from '@domain/event/ProductExportedEvent';
 
 export default class EventFactory {
   createProductImportedEvent(override: DeepPartial<ProductImportedEvent> = {}): ProductImportedEvent {
@@ -16,7 +16,7 @@ export default class EventFactory {
           id: IdGenerator.generate(),
           name: 'Test product',
           isHazardous: true,
-          size: { width: 1, height: 1, length: 1},
+          size: { width: 1, height: 1, length: 1 },
         },
         warehouse: {
           id: IdGenerator.generate(),
@@ -39,7 +39,7 @@ export default class EventFactory {
           id: IdGenerator.generate(),
           name: 'Test product',
           isHazardous: true,
-          size: { width: 1, height: 1, length: 1},
+          size: { width: 1, height: 1, length: 1 },
         },
         warehouse: {
           id: IdGenerator.generate(),

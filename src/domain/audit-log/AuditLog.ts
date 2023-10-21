@@ -1,4 +1,4 @@
-import Event, { EventType } from "@domain/event/Event";
+import Event, { EventType } from '@domain/event/Event';
 
 export type SearchParams = {
   types: Array<EventType>,

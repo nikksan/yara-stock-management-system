@@ -1,4 +1,4 @@
-import IdGenerator from "./IdGenerator";
+import IdGenerator from './IdGenerator';
 
 export type Id = string;
 

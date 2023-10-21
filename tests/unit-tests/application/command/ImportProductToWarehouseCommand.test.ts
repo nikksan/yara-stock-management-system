@@ -1,17 +1,17 @@
-import ImportProductToWarehouseCommand from "@application/command/ImportProductToWarehouseCommand";
-import InMemoryWarehouseRepository from "../../../utils/in-memory-repos/InMemoryWarehouseRepository";
-import InMemoryProductRepository from "../../../utils/in-memory-repos/InMemoryProductRepository";
-import IdGenerator from "@domain/model/IdGenerator";
-import EntityNotFoundError from "@application/errors/EntityNotFoundError";
-import EntityFactory from "../../../utils/entity-factory/EntityFactory";
-import TypeValidationError from "@domain/model/validation/TypeValidationError";
-import NotEnoughSpaceInWarehouseError from "@domain/errors/NotEnoughSpaceInWarehouseError";
-import CantMixProductsError from "@domain/errors/CantMixProductsError";
-import Warehouse from "@domain/model/Warehouse";
-import EventEmitter from "@domain/event/EventEmitter";
-import { EventType } from "@domain/event/Event";
-import LoggerFactory from "@infrastructure/logger/LoggerFactory";
-import { loadConfig } from "@config/index";
+import ImportProductToWarehouseCommand from '@application/command/ImportProductToWarehouseCommand';
+import InMemoryWarehouseRepository from '../../../utils/in-memory-repos/InMemoryWarehouseRepository';
+import InMemoryProductRepository from '../../../utils/in-memory-repos/InMemoryProductRepository';
+import IdGenerator from '@domain/model/IdGenerator';
+import EntityNotFoundError from '@application/errors/EntityNotFoundError';
+import EntityFactory from '../../../utils/entity-factory/EntityFactory';
+import TypeValidationError from '@domain/model/validation/TypeValidationError';
+import NotEnoughSpaceInWarehouseError from '@domain/errors/NotEnoughSpaceInWarehouseError';
+import CantMixProductsError from '@domain/errors/CantMixProductsError';
+import Warehouse from '@domain/model/Warehouse';
+import EventEmitter from '@domain/event/EventEmitter';
+import { EventType } from '@domain/event/Event';
+import LoggerFactory from '@infrastructure/logger/LoggerFactory';
+import { loadConfig } from '@config/index';
 
 describe('ImportProductToWarehouseCommand', () => {
   const warehouseRepository = new InMemoryWarehouseRepository();
@@ -101,7 +101,7 @@ describe('ImportProductToWarehouseCommand', () => {
         productId: seededProduct.id,
         warehouseId: seededWarehouse.id,
         quantity: 1,
-        date: new Date('no-such-thing')
+        date: new Date('no-such-thing'),
       });
     } catch (err) {
       caughtErr = err;
@@ -117,7 +117,7 @@ describe('ImportProductToWarehouseCommand', () => {
         width: 2,
         height: 2,
         length: 2,
-      }
+      },
     });
     await productRepository.save(product2x2x2);
 
@@ -132,12 +132,12 @@ describe('ImportProductToWarehouseCommand', () => {
           product: {
             id: product2x2x2.id,
             isHazardous: product2x2x2.getIsHazardous(),
-            size: product2x2x2.getSize()
+            size: product2x2x2.getSize(),
           },
           importedAt: new Date(),
           quantity: 15,
-        }
-      ]
+        },
+      ],
     });
     await warehouseRepository.save(fullWarehouse);
 
@@ -165,12 +165,12 @@ describe('ImportProductToWarehouseCommand', () => {
           product: {
             id: nonHazardousProduct.id,
             isHazardous: nonHazardousProduct.getIsHazardous(),
-            size: nonHazardousProduct.getSize()
+            size: nonHazardousProduct.getSize(),
           },
           importedAt: new Date(),
           quantity: 15,
-        }
-      ]
+        },
+      ],
     });
     await warehouseRepository.save(testWarehouse);
 
@@ -212,7 +212,7 @@ describe('ImportProductToWarehouseCommand', () => {
       productId: seededProduct.id,
       warehouseId: seededWarehouse.id,
       quantity: 1,
-      date: now
+      date: now,
     });
 
     expect(mockFn).toHaveBeenCalledWith(expect.objectContaining({
@@ -230,7 +230,7 @@ describe('ImportProductToWarehouseCommand', () => {
         },
         quantity: 1,
         importedAt: now,
-      }
+      },
     }));
   });
 });

@@ -1,6 +1,6 @@
-import AuditLog, { SearchParams } from "@domain/audit-log/AuditLog";
-import Event from "@domain/event/Event";
-import { cloneDeep, isEqual, merge } from "lodash";
+import AuditLog, { SearchParams } from '@domain/audit-log/AuditLog';
+import Event from '@domain/event/Event';
+import { cloneDeep, isEqual, merge } from 'lodash';
 
 export default class InMemoryAuditLog implements AuditLog {
   private events: Array<Event> = [];

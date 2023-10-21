@@ -48,20 +48,20 @@ export default class InMemoryRepository<EntityType extends Entity> implements Re
 
     const items = Array.from(this.entities.values())
       .slice(start, end)
-      .map(el => cloneDeep(el));
+      .map((el) => cloneDeep(el));
 
     return {
       items,
       total: this.entities.size,
-    }
+    };
   }
 
-  protected createEntity(entity: EntityType) {
+  protected createEntity(entity: EntityType): void {
     const createdEntity = cloneDeep(entity);
     this.entities.set(createdEntity.id, createdEntity);
   }
 
-  protected updateEntity(entity: EntityType) {
+  protected updateEntity(entity: EntityType): void {
     const updatedEntity = cloneDeep(entity);
     this.entities.set(updatedEntity.id, updatedEntity);
   }

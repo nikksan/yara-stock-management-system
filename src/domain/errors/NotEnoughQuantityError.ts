@@ -1,4 +1,4 @@
-import { Id } from "@domain/model/Entity";
+import { Id } from '@domain/model/Entity';
 
 export default class NotEnoughQuantityError extends Error {
   constructor(

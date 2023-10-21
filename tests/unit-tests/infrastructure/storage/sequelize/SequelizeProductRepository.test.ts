@@ -1,9 +1,9 @@
-import { loadConfig } from "@config/index";
+import { loadConfig } from '@config/index';
 // import { prepareDb } from "../../../../utils/dbSetup";
-import SequelizeProductRepository from "@infrastructure/storage/sequelize/SequelizeProductRepository";
-import { Sequelize } from "sequelize";
-import EntityFactory from "../../../../utils/entity-factory/EntityFactory";
-import LoggerFactory from "@infrastructure/logger/LoggerFactory";
+import SequelizeProductRepository from '@infrastructure/storage/sequelize/SequelizeProductRepository';
+import { Sequelize } from 'sequelize';
+import EntityFactory from '../../../../utils/entity-factory/EntityFactory';
+import LoggerFactory from '@infrastructure/logger/LoggerFactory';
 
 describe('SequelizeProductRepository', () => {
   const config = loadConfig();
@@ -37,19 +37,19 @@ describe('SequelizeProductRepository', () => {
   it('should find an entity by name and size', async () => {
     const product1 = entityFactory.createProduct({
       name: 'some name',
-      size: { width: 1, height: 1, length: 1 }
+      size: { width: 1, height: 1, length: 1 },
     });
     await productRepository.save(product1);
 
     const product2 = entityFactory.createProduct({
       name: 'another name',
-      size: { width: 2, height: 2, length: 2 }
+      size: { width: 2, height: 2, length: 2 },
     });
     await productRepository.save(product2);
 
     const product3 = entityFactory.createProduct({
       name: 'some name',
-      size: { width: 2, height: 2, length: 2 }
+      size: { width: 2, height: 2, length: 2 },
     });
     await productRepository.save(product3);
 
@@ -85,7 +85,7 @@ describe('SequelizeProductRepository', () => {
 
     expect(paginatedResult.total).toEqual(10);
     expect(paginatedResult.items.length).toEqual(2);
-    expect(paginatedResult.items.map(entity => entity.getName())).toEqual([
+    expect(paginatedResult.items.map((entity) => entity.getName())).toEqual([
       'Product 3',
       'Product 4',
     ]);

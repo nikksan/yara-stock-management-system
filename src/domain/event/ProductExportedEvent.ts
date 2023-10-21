@@ -1,5 +1,5 @@
-import Size from "@domain/model/Size";
-import { EventType, MakeEvent } from "./Event";
+import Size from '@domain/model/Size';
+import { EventType, MakeEvent } from './Event';
 
 type ProductExportedEvent = MakeEvent<EventType.ProductExported, {
   product: {

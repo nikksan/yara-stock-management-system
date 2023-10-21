@@ -1,8 +1,8 @@
-import EntityNotFoundError from "@application/errors/EntityNotFoundError";
-import { Id } from "@domain/model/Entity";
-import WarehouseRepository from "@domain/repository/WarehouseRepository";
-import { Logger } from "@infrastructure/logger/Logger";
-import LoggerFactory from "@infrastructure/logger/LoggerFactory";
+import EntityNotFoundError from '@application/errors/EntityNotFoundError';
+import { Id } from '@domain/model/Entity';
+import WarehouseRepository from '@domain/repository/WarehouseRepository';
+import { Logger } from '@infrastructure/logger/Logger';
+import LoggerFactory from '@infrastructure/logger/LoggerFactory';
 
 export default class DeleteWarehouseCommand {
   private logger: Logger;
@@ -24,4 +24,4 @@ export default class DeleteWarehouseCommand {
 
     this.logger.info(`Deleted warehouse #${existingWarehouse.id}`);
   }
-};
+}

@@ -1,5 +1,5 @@
-import ProductExportedEvent from "./ProductExportedEvent";
-import ProductImportedEvent from "./ProductImportedEvent";
+import ProductExportedEvent from './ProductExportedEvent';
+import ProductImportedEvent from './ProductImportedEvent';
 
 export enum EventType {
   ProductImported = 'product_imported',

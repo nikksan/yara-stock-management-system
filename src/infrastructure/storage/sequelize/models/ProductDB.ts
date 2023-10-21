@@ -11,7 +11,7 @@ export type ProductAttributes = {
 export type ProductDAO = Model<ProductAttributes>;
 export type ProductDB = ModelStatic<ProductDAO>;
 
-export default (dbConnection: Sequelize) => dbConnection.define('Product', {
+export default (dbConnection: Sequelize): ProductDB => dbConnection.define('Product', {
   id: {
     type: DataTypes.STRING(36),
     allowNull: false,
@@ -29,7 +29,7 @@ export default (dbConnection: Sequelize) => dbConnection.define('Product', {
   isHazardous: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
-  }
+  },
 }, {
   freezeTableName: true,
   timestamps: false,

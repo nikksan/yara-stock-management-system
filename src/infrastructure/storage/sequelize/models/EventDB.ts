@@ -10,7 +10,7 @@ export type EventAttributes = {
 export type EventDAO = Model<EventAttributes>;
 export type EventDB = ModelStatic<EventDAO>;
 
-export default (dbConnection: Sequelize) => dbConnection.define('Event', {
+export default (dbConnection: Sequelize): EventDB => dbConnection.define('Event', {
   id: {
     type: DataTypes.STRING(36),
     allowNull: false,
@@ -28,7 +28,7 @@ export default (dbConnection: Sequelize) => dbConnection.define('Event', {
   createdAt: {
     type: DataTypes.DATE,
     allowNull: false,
-  }
+  },
 }, {
   freezeTableName: true,
   timestamps: false,

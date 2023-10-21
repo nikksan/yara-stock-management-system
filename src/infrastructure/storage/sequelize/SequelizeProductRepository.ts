@@ -1,12 +1,12 @@
-import { Op, Sequelize } from "sequelize";
-import createModel, { ProductAttributes, ProductDAO, ProductDB } from "./models/ProductDB";
-import ProductRepository from "@domain/repository/ProductRepository";
-import Product from "@domain/model/Product";
-import { PaginationOpts, Paginated } from "@domain/repository/Repository";
-import { Id } from "@domain/model/Entity";
-import LoggerFactory from "@infrastructure/logger/LoggerFactory";
-import { Logger } from "@infrastructure/logger/Logger";
-import Size from "@domain/model/Size";
+import { Sequelize } from 'sequelize';
+import createModel, { ProductAttributes, ProductDAO, ProductDB } from './models/ProductDB';
+import ProductRepository from '@domain/repository/ProductRepository';
+import Product from '@domain/model/Product';
+import { PaginationOpts, Paginated } from '@domain/repository/Repository';
+import { Id } from '@domain/model/Entity';
+import LoggerFactory from '@infrastructure/logger/LoggerFactory';
+import { Logger } from '@infrastructure/logger/Logger';
+import Size from '@domain/model/Size';
 
 export default class SequelizeProductRepository implements ProductRepository {
   private model: ProductDB;
@@ -40,8 +40,8 @@ export default class SequelizeProductRepository implements ProductRepository {
   async delete(entity: Product): Promise<boolean> {
     const deletedCount = await this.model.destroy({
       where: {
-        id: entity.id
-      }
+        id: entity.id,
+      },
     });
 
     return Boolean(deletedCount);
@@ -96,7 +96,7 @@ export default class SequelizeProductRepository implements ProductRepository {
 
   async deleteAll(): Promise<void> {
     await this.model.destroy({
-      where: {}
+      where: {},
     });
   }
 
@@ -110,7 +110,7 @@ export default class SequelizeProductRepository implements ProductRepository {
       name: entity.getName(),
       size: entity.getSize(),
       isHazardous: entity.getIsHazardous(),
-    }
+    };
   }
 
   private mapDAOToEntity(dao: ProductDAO): Product {

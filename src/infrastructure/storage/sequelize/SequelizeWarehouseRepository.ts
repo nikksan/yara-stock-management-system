@@ -1,11 +1,11 @@
-import { Op, Sequelize } from "sequelize";
-import createModel, { WarehouseAttributes, WarehouseDAO, WarehouseDB } from "./models/WarehouseDB";
-import WarehouseRepository from "@domain/repository/WarehouseRepository";
-import Warehouse from "@domain/model/Warehouse";
-import { PaginationOpts, Paginated } from "@domain/repository/Repository";
-import { Id } from "@domain/model/Entity";
-import LoggerFactory from "@infrastructure/logger/LoggerFactory";
-import { Logger } from "@infrastructure/logger/Logger";
+import { Op, Sequelize } from 'sequelize';
+import createModel, { WarehouseAttributes, WarehouseDAO, WarehouseDB } from './models/WarehouseDB';
+import WarehouseRepository from '@domain/repository/WarehouseRepository';
+import Warehouse from '@domain/model/Warehouse';
+import { PaginationOpts, Paginated } from '@domain/repository/Repository';
+import { Id } from '@domain/model/Entity';
+import LoggerFactory from '@infrastructure/logger/LoggerFactory';
+import { Logger } from '@infrastructure/logger/Logger';
 
 export default class SequelizeWarehouseRepository implements WarehouseRepository {
   private model: WarehouseDB;
@@ -38,8 +38,9 @@ export default class SequelizeWarehouseRepository implements WarehouseRepository
     const daos = await this.model.findAll({
       where: {
         inventory: {
-          [Op.contains]: [{ product: { id } }]
-        }
+          [Op.contains]: [{ product: { id } }],
+        },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } as any,
     });
 
@@ -58,8 +59,8 @@ export default class SequelizeWarehouseRepository implements WarehouseRepository
   async delete(entity: Warehouse): Promise<boolean> {
     const deletedCount = await this.model.destroy({
       where: {
-        id: entity.id
-      }
+        id: entity.id,
+      },
     });
 
     return Boolean(deletedCount);
@@ -114,7 +115,7 @@ export default class SequelizeWarehouseRepository implements WarehouseRepository
 
   async deleteAll(): Promise<void> {
     await this.model.destroy({
-      where: {}
+      where: {},
     });
   }
 
@@ -127,11 +128,11 @@ export default class SequelizeWarehouseRepository implements WarehouseRepository
       id: entity.id,
       name: entity.getName(),
       size: entity.getSize(),
-      inventory: entity.getInventory().map(item => ({
+      inventory: entity.getInventory().map((item) => ({
         ...item,
         importedAt: item.importedAt.toISOString(),
       })),
-    }
+    };
   }
 
   private mapDAOToEntity(dao: WarehouseDAO): Warehouse {
@@ -139,7 +140,7 @@ export default class SequelizeWarehouseRepository implements WarehouseRepository
       id: dao.dataValues.id,
       name: dao.dataValues.name,
       size: dao.dataValues.size,
-      inventory: dao.dataValues.inventory.map(itemDAO => ({
+      inventory: dao.dataValues.inventory.map((itemDAO) => ({
         ...itemDAO,
         importedAt: new Date(itemDAO.importedAt),
       })),

@@ -1,7 +1,7 @@
-import DateRangeService from "@application/service/DateRangeService";
-import AuditLog from "@domain/audit-log/AuditLog";
-import Event, { EventType } from "@domain/event/Event";
-import { Id } from "@domain/model/Entity";
+import DateRangeService from '@application/service/DateRangeService';
+import AuditLog from '@domain/audit-log/AuditLog';
+import Event, { EventType } from '@domain/event/Event';
+import { Id } from '@domain/model/Entity';
 
 export type Input = {
   warehouseIds?: Array<Id>,

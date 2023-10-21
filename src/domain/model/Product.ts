@@ -1,4 +1,4 @@
-import Entity, { ConstructorParams as EntityConstructorParams, Id } from './Entity';
+import Entity, { ConstructorParams as EntityConstructorParams } from './Entity';
 import Size from './Size';
 import TypeValidator from './validation/TypeValidator';
 
@@ -25,31 +25,31 @@ export default class Product extends Entity {
     this.isHazardous = params.isHazardous;
   }
 
-  getName() {
+  getName(): string {
     return this.name;
   }
 
-  getSize() {
+  getSize(): Size {
     return this.size;
   }
 
-  getIsHazardous() {
+  getIsHazardous(): boolean {
     return this.isHazardous;
   }
 
-  changeSize(size: Size) {
+  changeSize(size: Size): void {
     TypeValidator.validateSize(size);
 
     this.size = size;
   }
 
-  changeName(name: string) {
+  changeName(name: string): void {
     TypeValidator.validateName(name);
 
     this.name = name;
   }
 
-  changeIsHazardous(isHazardous: boolean) {
+  changeIsHazardous(isHazardous: boolean): void {
     this.isHazardous = isHazardous;
   }
 }

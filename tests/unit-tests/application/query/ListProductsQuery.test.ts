@@ -1,13 +1,13 @@
-import ListProductsQuery from "@application/query/ListProductsQuery";
-import EntityFactory from "../../../utils/entity-factory/EntityFactory";
-import InMemoryProductRepository from "../../../utils/in-memory-repos/InMemoryProductRepository";
+import ListProductsQuery from '@application/query/ListProductsQuery';
+import EntityFactory from '../../../utils/entity-factory/EntityFactory';
+import InMemoryProductRepository from '../../../utils/in-memory-repos/InMemoryProductRepository';
 
 describe('ListProductsQuery', () => {
   const productRepository = new InMemoryProductRepository();
   const entityFactory = new EntityFactory();
 
   const query = new ListProductsQuery(
-    productRepository
+    productRepository,
   );
 
   afterEach(async () => {

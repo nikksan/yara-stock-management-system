@@ -46,7 +46,7 @@ describe('Import product to warehouse', () => {
         productId: IdGenerator.generate(),
         warehouseId: warehouse.id,
         quantity: 1,
-      }
+      },
     });
 
     assert(response.body.kind === 'single');
@@ -55,7 +55,7 @@ describe('Import product to warehouse', () => {
       code: 'ENTITY_NOT_FOUND',
       details: expect.objectContaining({
         entityType: 'product',
-      })
+      }),
     }));
   });
 
@@ -81,7 +81,7 @@ describe('Import product to warehouse', () => {
         productId: product.id,
         warehouseId: IdGenerator.generate(),
         quantity: 1,
-      }
+      },
     });
 
     assert(response.body.kind === 'single');
@@ -90,7 +90,7 @@ describe('Import product to warehouse', () => {
       code: 'ENTITY_NOT_FOUND',
       details: expect.objectContaining({
         entityType: 'warehouse',
-      })
+      }),
     }));
   });
 
@@ -119,7 +119,7 @@ describe('Import product to warehouse', () => {
         productId: product.id,
         warehouseId: warehouse.id,
         quantity,
-      }
+      },
     });
 
     assert(response.body.kind === 'single');
@@ -156,8 +156,8 @@ describe('Import product to warehouse', () => {
         productId: product.id,
         warehouseId: warehouse.id,
         quantity: 10,
-        date: 'invalid date'
-      }
+        date: 'invalid date',
+      },
     });
 
     assert(response.body.kind === 'single');
@@ -173,7 +173,7 @@ describe('Import product to warehouse', () => {
         height: 10,
         length: 10,
         width: 10,
-      }
+      },
     });
     await productRepository.save(product);
 
@@ -182,7 +182,7 @@ describe('Import product to warehouse', () => {
         height: 1,
         length: 1,
         width: 1,
-      }
+      },
     });
     await warehouseRepository.save(warehouse);
 
@@ -204,7 +204,7 @@ describe('Import product to warehouse', () => {
         productId: product.id,
         warehouseId: warehouse.id,
         quantity: 10,
-      }
+      },
     });
 
     assert(response.body.kind === 'single');
@@ -235,8 +235,8 @@ describe('Import product to warehouse', () => {
           },
           quantity: 1,
           importedAt: new Date(),
-        }
-      ]
+        },
+      ],
     });
     await warehouseRepository.save(warehouse);
 
@@ -258,7 +258,7 @@ describe('Import product to warehouse', () => {
         productId: nonHazardousProduct.id,
         warehouseId: warehouse.id,
         quantity: 10,
-      }
+      },
     });
 
     assert(response.body.kind === 'single');
@@ -295,7 +295,7 @@ describe('Import product to warehouse', () => {
         productId: product.id,
         warehouseId: warehouse.id,
         quantity: 10,
-      }
+      },
     });
 
     assert(response.body.kind === 'single');
@@ -331,11 +331,11 @@ describe('Import product to warehouse', () => {
         productId: product.id,
         warehouseId: warehouse.id,
         quantity: 10,
-      }
+      },
     });
 
     const events = await auditLog.search({
-      types: [EventType.ProductImported]
+      types: [EventType.ProductImported],
     });
 
     expect(events.length).toEqual(1);

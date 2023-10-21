@@ -1,9 +1,9 @@
-import EntityNotFoundError from "@application/errors/EntityNotFoundError";
-import { Id } from "@domain/model/Entity";
-import ProductRepository from "@domain/repository/ProductRepository";
-import WarehouseRepository from "@domain/repository/WarehouseRepository"
-import { Logger } from "@infrastructure/logger/Logger";
-import LoggerFactory from "@infrastructure/logger/LoggerFactory";
+import EntityNotFoundError from '@application/errors/EntityNotFoundError';
+import { Id } from '@domain/model/Entity';
+import ProductRepository from '@domain/repository/ProductRepository';
+import WarehouseRepository from '@domain/repository/WarehouseRepository';
+import { Logger } from '@infrastructure/logger/Logger';
+import LoggerFactory from '@infrastructure/logger/LoggerFactory';
 
 export type Input = {
   productId: Id,

@@ -1,11 +1,11 @@
-import LoggerFactory from "@infrastructure/logger/LoggerFactory";
-import { InjectionMode, Lifetime, asClass, asValue, createContainer } from "awilix";
-import { loadConfig } from "./config";
-import { Sequelize } from "sequelize";
-import SequelizeWarehouseRepository from "@infrastructure/storage/sequelize/SequelizeWarehouseRepository";
-import SequelizeProductRepository from "@infrastructure/storage/sequelize/SequelizeProductRepository";
-import SequelizeAuditLog from "@infrastructure/storage/sequelize/SequelizeAuditLog";
-import HttpServer from "@infrastructure/server/HttpServer";
+import LoggerFactory from '@infrastructure/logger/LoggerFactory';
+import { InjectionMode, Lifetime, asClass, asValue, createContainer } from 'awilix';
+import { loadConfig } from './config';
+import { Sequelize } from 'sequelize';
+import SequelizeWarehouseRepository from '@infrastructure/storage/sequelize/SequelizeWarehouseRepository';
+import SequelizeProductRepository from '@infrastructure/storage/sequelize/SequelizeProductRepository';
+import SequelizeAuditLog from '@infrastructure/storage/sequelize/SequelizeAuditLog';
+import HttpServer from '@infrastructure/server/HttpServer';
 
 const config = loadConfig();
 const container = createContainer({
@@ -39,14 +39,14 @@ container.loadModules([
   formatName: 'camelCase',
   resolverOptions: {
     lifetime: Lifetime.SINGLETON,
-  }
+  },
 });
 
 container.register({
   httpServer: asClass(HttpServer, {
     injector: () => ({
       config: config.server,
-    })
+    }),
   }).singleton(),
 });
 

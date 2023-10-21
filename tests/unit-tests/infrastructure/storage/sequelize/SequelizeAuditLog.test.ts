@@ -1,9 +1,9 @@
-import { loadConfig } from "@config/index";
-import LoggerFactory from "@infrastructure/logger/LoggerFactory";
-import SequelizeAuditLog from "@infrastructure/storage/sequelize/SequelizeAuditLog";
-import { Sequelize } from "sequelize";
-import EventFactory from "../../../../utils/event-factory/EventFactory";
-import { EventType } from "@domain/event/Event";
+import { loadConfig } from '@config/index';
+import LoggerFactory from '@infrastructure/logger/LoggerFactory';
+import SequelizeAuditLog from '@infrastructure/storage/sequelize/SequelizeAuditLog';
+import { Sequelize } from 'sequelize';
+import EventFactory from '../../../../utils/event-factory/EventFactory';
+import { EventType } from '@domain/event/Event';
 
 describe('SequelizeAuditLog', () => {
   const config = loadConfig();
@@ -26,7 +26,7 @@ describe('SequelizeAuditLog', () => {
     await auditLog.append(eventFactory.createProductImportedEvent());
 
     const events = await auditLog.search({
-      types: [EventType.ProductExported]
+      types: [EventType.ProductExported],
     });
 
     expect(events.length).toEqual(1);
@@ -66,32 +66,32 @@ describe('SequelizeAuditLog', () => {
       data: {
         warehouse: {
           id: '1',
-        }
-      }
+        },
+      },
     });
 
     const event2 = eventFactory.createProductImportedEvent({
       data: {
         warehouse: {
           id: '1',
-        }
-      }
+        },
+      },
     });
 
     const event3 = eventFactory.createProductImportedEvent({
       data: {
         warehouse: {
           id: '2',
-        }
-      }
+        },
+      },
     });
 
     const event4 = eventFactory.createProductImportedEvent({
       data: {
         warehouse: {
           id: '3',
-        }
-      }
+        },
+      },
     });
 
     await auditLog.append(event1);

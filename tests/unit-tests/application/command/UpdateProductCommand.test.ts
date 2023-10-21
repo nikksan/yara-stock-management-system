@@ -1,13 +1,13 @@
-import UpdateProductCommand from "@application/command/UpdateProductCommand";
-import InMemoryProductRepository from "../../../utils/in-memory-repos/InMemoryProductRepository";
-import EntityFactory from "../../../utils/entity-factory/EntityFactory";
-import InMemoryWarehouseRepository from "../../../utils/in-memory-repos/InMemoryWarehouseRepository";
-import IdGenerator from "@domain/model/IdGenerator";
-import EntityNotFoundError from "@application/errors/EntityNotFoundError";
-import OperationForbiddenError from "@application/errors/OperationForbiddenError";
-import Product from "@domain/model/Product";
-import LoggerFactory from "@infrastructure/logger/LoggerFactory";
-import { loadConfig } from "@config/index";
+import UpdateProductCommand from '@application/command/UpdateProductCommand';
+import InMemoryProductRepository from '../../../utils/in-memory-repos/InMemoryProductRepository';
+import EntityFactory from '../../../utils/entity-factory/EntityFactory';
+import InMemoryWarehouseRepository from '../../../utils/in-memory-repos/InMemoryWarehouseRepository';
+import IdGenerator from '@domain/model/IdGenerator';
+import EntityNotFoundError from '@application/errors/EntityNotFoundError';
+import OperationForbiddenError from '@application/errors/OperationForbiddenError';
+import Product from '@domain/model/Product';
+import LoggerFactory from '@infrastructure/logger/LoggerFactory';
+import { loadConfig } from '@config/index';
 
 describe('UpdateProductCommand', () => {
   const productRepository = new InMemoryProductRepository();
@@ -41,7 +41,7 @@ describe('UpdateProductCommand', () => {
           size: product.getSize(),
         },
         quantity: 3,
-      }]
+      }],
     });
     await warehouseRepository.save(warehouse);
 
@@ -51,7 +51,7 @@ describe('UpdateProductCommand', () => {
       size: {
         ...productSize,
         height: productSize.height + 1,
-      }
+      },
     })).rejects.toThrow(OperationForbiddenError);
   });
 
@@ -68,7 +68,7 @@ describe('UpdateProductCommand', () => {
           size: product.getSize(),
         },
         quantity: 3,
-      }]
+      }],
     });
     await warehouseRepository.save(warehouse);
 
@@ -84,7 +84,7 @@ describe('UpdateProductCommand', () => {
         height: 1,
         width: 1,
         length: 1,
-      }
+      },
     });
     await productRepository.save(product);
 
@@ -94,7 +94,7 @@ describe('UpdateProductCommand', () => {
         height: 2,
         width: 1,
         length: 1,
-      }
+      },
     });
 
     const updatedProduct = await productRepository.findById(product.id) as Product;
@@ -142,7 +142,7 @@ describe('UpdateProductCommand', () => {
           size: product.getSize(),
         },
         quantity: 3,
-      }]
+      }],
     });
     await warehouseRepository.save(warehouse);
     const newValue = product.getName() + '-v2';

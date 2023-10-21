@@ -20,7 +20,7 @@ const config: Config = {
     database: parseString('DB_NAME', 'test_db'),
     username: parseString('DB_USER'),
     password: parseString('DB_PASSWORD'),
-  }
+  },
 };
 
 export default config;

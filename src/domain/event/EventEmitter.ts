@@ -1,5 +1,5 @@
-import IdGenerator from "@domain/model/IdGenerator";
-import Event, { EventType, EventTypeToEventData } from "./Event";
+import IdGenerator from '@domain/model/IdGenerator';
+import Event, { EventType, EventTypeToEventData } from './Event';
 
 type EventCallback = (event: Event) => unknown;
 
@@ -14,7 +14,7 @@ export default class EventEmitter {
       createdAt: new Date(),
     } as Event; // todo: figure out this cast!?
 
-    this.callbacks.forEach(callback => callback(event));
+    this.callbacks.forEach((callback) => callback(event));
   }
 
   static subscribe(callback: EventCallback): void {

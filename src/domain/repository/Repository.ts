@@ -1,4 +1,4 @@
-import Entity, { Id } from "@domain/model/Entity";
+import Entity, { Id } from '@domain/model/Entity';
 
 export type Paginated<E extends Entity> = {
   items: Array<E>,

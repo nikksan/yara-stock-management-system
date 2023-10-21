@@ -9,7 +9,7 @@ export const parseString = (field: string, defaultValue?: string): string => {
   }
 
   return value;
-}
+};
 
 export const parseNumber = (field: string, defaultValue?: number): number => {
   const value = process.env[field];
@@ -27,7 +27,7 @@ export const parseNumber = (field: string, defaultValue?: number): number => {
   }
 
   return valueAsNumber;
-}
+};
 
 export const parseEnum = <T>(field: string, allowedValues: Array<string>, defaultValue?: T): T => {
   const value = process.env[field];
@@ -44,8 +44,5 @@ export const parseEnum = <T>(field: string, allowedValues: Array<string>, defaul
   }
 
   return value as T;
-}
-
-
-
+};
 

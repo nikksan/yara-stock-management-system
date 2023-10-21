@@ -1,8 +1,8 @@
-import { loadConfig } from "@config/index";
-import { Sequelize } from "sequelize";
-import EntityFactory from "../../../../utils/entity-factory/EntityFactory";
-import LoggerFactory from "@infrastructure/logger/LoggerFactory";
-import SequelizeWarehouseRepository from "@infrastructure/storage/sequelize/SequelizeWarehouseRepository";
+import { loadConfig } from '@config/index';
+import { Sequelize } from 'sequelize';
+import EntityFactory from '../../../../utils/entity-factory/EntityFactory';
+import LoggerFactory from '@infrastructure/logger/LoggerFactory';
+import SequelizeWarehouseRepository from '@infrastructure/storage/sequelize/SequelizeWarehouseRepository';
 
 describe('SequelizeWarehouseRepository', () => {
   const config = loadConfig();
@@ -28,7 +28,7 @@ describe('SequelizeWarehouseRepository', () => {
           quantity: 1,
           importedAt: new Date(),
         },
-      ]
+      ],
     });
 
     await warehouseRepository.save(warehouse);
@@ -66,7 +66,7 @@ describe('SequelizeWarehouseRepository', () => {
           quantity: 1,
           importedAt: new Date(),
         },
-      ]
+      ],
     });
     const warehouse2 = entityFactory.createWarehouse({
       inventory: [
@@ -88,7 +88,7 @@ describe('SequelizeWarehouseRepository', () => {
           quantity: 1,
           importedAt: new Date(),
         },
-      ]
+      ],
     });
     const warehouse3 = entityFactory.createWarehouse({
       inventory: [
@@ -101,7 +101,7 @@ describe('SequelizeWarehouseRepository', () => {
           quantity: 1,
           importedAt: new Date(),
         },
-      ]
+      ],
     });
     await warehouseRepository.save(warehouse1);
     await warehouseRepository.save(warehouse2);
@@ -109,7 +109,7 @@ describe('SequelizeWarehouseRepository', () => {
 
     const foundWarehouses = await warehouseRepository.findAllByProductId('2');
     expect(foundWarehouses.length).toEqual(2);
-    expect(foundWarehouses.map(w => w.id)).toEqual([warehouse1.id, warehouse3.id]);
+    expect(foundWarehouses.map((w) => w.id)).toEqual([warehouse1.id, warehouse3.id]);
   });
 
   it('should delete an entity', async () => {
@@ -146,7 +146,7 @@ describe('SequelizeWarehouseRepository', () => {
 
     expect(paginatedResult.total).toEqual(10);
     expect(paginatedResult.items.length).toEqual(2);
-    expect(paginatedResult.items.map(entity => entity.getName())).toEqual([
+    expect(paginatedResult.items.map((entity) => entity.getName())).toEqual([
       'Warehouse 3',
       'Warehouse 4',
     ]);

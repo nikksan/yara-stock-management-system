@@ -1,10 +1,10 @@
-import UniqueConstraintError from "@application/errors/UniqueConstraintError";
-import { Id } from "@domain/model/Entity";
-import Product from "@domain/model/Product";
-import Size from "@domain/model/Size";
-import ProductRepository from "@domain/repository/ProductRepository";
-import { Logger } from "@infrastructure/logger/Logger";
-import LoggerFactory from "@infrastructure/logger/LoggerFactory";
+import UniqueConstraintError from '@application/errors/UniqueConstraintError';
+import { Id } from '@domain/model/Entity';
+import Product from '@domain/model/Product';
+import Size from '@domain/model/Size';
+import ProductRepository from '@domain/repository/ProductRepository';
+import { Logger } from '@infrastructure/logger/Logger';
+import LoggerFactory from '@infrastructure/logger/LoggerFactory';
 
 export type Input = {
   name: string,
@@ -39,4 +39,4 @@ export default class CreateProductCommand {
 
     return product.id;
   }
-};
+}

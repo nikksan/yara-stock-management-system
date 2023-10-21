@@ -84,8 +84,8 @@ export default class Warehouse extends Entity {
     return this.size;
   }
 
-  hasProductStocked(productId: Id) {
-    return this.inventory.some(item => item.product.id === productId);
+  hasProductStocked(productId: Id): boolean {
+    return this.inventory.some((item) => item.product.id === productId);
   }
 
   calculateSpaceStats(): SpaceStats {
@@ -213,7 +213,7 @@ export default class Warehouse extends Entity {
   private decreaseInventory(product: Product, quantity: number) {
     const now = new Date();
     const itemsToSubtractFrom = this.inventory
-      .filter(item => item.product.id === product.id && item.importedAt.getTime() <= now.getTime())
+      .filter((item) => item.product.id === product.id && item.importedAt.getTime() <= now.getTime())
       .sort((item1, item2) => item1.importedAt.getTime() - item2.importedAt.getTime()); // FIFO
 
     let remainingQuantityToSubtract = quantity;

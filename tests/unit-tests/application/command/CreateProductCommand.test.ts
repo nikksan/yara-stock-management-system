@@ -1,11 +1,11 @@
-import CreateProductCommand from "@application/command/CreateProductCommand";
-import InMemoryProductRepository from "../../../utils/in-memory-repos/InMemoryProductRepository";
-import EntityFactory from "../../../utils/entity-factory/EntityFactory";
-import UniqueConstraintError from "@application/errors/UniqueConstraintError";
-import TypeValidationError from "@domain/model/validation/TypeValidationError";
-import Product from "@domain/model/Product";
-import LoggerFactory from "@infrastructure/logger/LoggerFactory";
-import { loadConfig } from "@config/index";
+import CreateProductCommand from '@application/command/CreateProductCommand';
+import InMemoryProductRepository from '../../../utils/in-memory-repos/InMemoryProductRepository';
+import EntityFactory from '../../../utils/entity-factory/EntityFactory';
+import UniqueConstraintError from '@application/errors/UniqueConstraintError';
+import TypeValidationError from '@domain/model/validation/TypeValidationError';
+import Product from '@domain/model/Product';
+import LoggerFactory from '@infrastructure/logger/LoggerFactory';
+import { loadConfig } from '@config/index';
 
 describe('CreateProductCommand', () => {
   const productRepository = new InMemoryProductRepository();

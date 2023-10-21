@@ -20,7 +20,7 @@ const config: Config = {
     database: parseString('DB_NAME', 'yara_stock_management_system'),
     username: parseString('DB_USER'),
     password: parseString('DB_PASSWORD'),
-  }
+  },
 };
 
 export default config;

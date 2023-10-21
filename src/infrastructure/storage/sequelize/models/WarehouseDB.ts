@@ -14,7 +14,7 @@ export type WarehouseAttributes = {
 export type WarehouseDAO = Model<WarehouseAttributes>;
 export type WarehouseDB = ModelStatic<WarehouseDAO>;
 
-export default (dbConnection: Sequelize) => dbConnection.define('Warehouse', {
+export default (dbConnection: Sequelize): WarehouseDB => dbConnection.define('Warehouse', {
   id: {
     type: DataTypes.STRING(36),
     allowNull: false,
@@ -32,7 +32,7 @@ export default (dbConnection: Sequelize) => dbConnection.define('Warehouse', {
   inventory: {
     type: DataTypes.JSONB,
     allowNull: false,
-  }
+  },
 }, {
   freezeTableName: true,
   timestamps: false,

@@ -20,7 +20,7 @@ describe('Create warehouse', () => {
         length: 15,
       },
       isHazardous: true,
-    }
+    };
 
     return merge(defaults, override);
   }
@@ -38,7 +38,7 @@ describe('Create warehouse', () => {
           createProduct(name: $name, size: $size, isHazardous: $isHazardous)
         }
       `,
-      variables: createVariable({ name })
+      variables: createVariable({ name }),
     });
 
     assert(response.body.kind === 'single');
@@ -48,13 +48,13 @@ describe('Create warehouse', () => {
       details: expect.objectContaining({
         path: 'name',
         value: name,
-      })
+      }),
     }));
   });
 
   for (const dimension of ['width', 'height', 'length']) {
     it.each([
-      -1, 0
+      -1, 0,
     ])(`should fail with TYPE_VALIDATION code when trying to create product with size.${dimension} = "%s"`, async (size) => {
       const response = await apolloServer.executeOperation({
         query: `
@@ -62,7 +62,7 @@ describe('Create warehouse', () => {
             createProduct(name: $name, size: $size, isHazardous: $isHazardous)
           }
         `,
-        variables: createVariable({ size: { [dimension]: size } })
+        variables: createVariable({ size: { [dimension]: size } }),
       });
 
       assert(response.body.kind === 'single');
@@ -72,12 +72,12 @@ describe('Create warehouse', () => {
         details: expect.objectContaining({
           path: 'size.' + dimension,
           value: size,
-        })
+        }),
       }));
     });
   }
 
-  it(`should fail with UNIQUE_CONSTRAINT code when product with the same name and size already exists`, async () => {
+  it('should fail with UNIQUE_CONSTRAINT code when product with the same name and size already exists', async () => {
     const product = entityFactory.createProduct();
     await productRepository.save(product);
 
@@ -90,7 +90,7 @@ describe('Create warehouse', () => {
       variables: createVariable({
         name: product.getName(),
         size: product.getSize(),
-      })
+      }),
     });
 
     assert(response.body.kind === 'single');
@@ -99,18 +99,18 @@ describe('Create warehouse', () => {
       code: 'UNIQUE_CONSTRAINT',
       details: expect.objectContaining({
         path: 'name+size',
-      })
+      }),
     }));
   });
 
-  it(`should create a product if everything is ok`, async () => {
+  it('should create a product if everything is ok', async () => {
     const response = await apolloServer.executeOperation({
       query: `
         mutation CreateProduct($name: String!, $size: SizeInput!, $isHazardous: Boolean!) {
           createProduct(name: $name, size: $size, isHazardous: $isHazardous)
         }
       `,
-      variables: createVariable()
+      variables: createVariable(),
     });
 
     assert(response.body.kind === 'single');

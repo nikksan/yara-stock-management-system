@@ -18,8 +18,8 @@ describe('Create warehouse', () => {
         width: 15,
         height: 2,
         length: 15,
-      }
-    }
+      },
+    };
 
     return merge(defaults, override);
   }
@@ -37,7 +37,7 @@ describe('Create warehouse', () => {
           createWarehouse(name: $name, size: $size)
         }
       `,
-      variables: createVariable({ name })
+      variables: createVariable({ name }),
     });
 
     assert(response.body.kind === 'single');
@@ -47,13 +47,13 @@ describe('Create warehouse', () => {
       details: expect.objectContaining({
         path: 'name',
         value: name,
-      })
+      }),
     }));
   });
 
   for (const dimension of ['width', 'height', 'length']) {
     it.each([
-      -1, 0
+      -1, 0,
     ])(`should fail with TYPE_VALIDATION code when trying to create warehouse with size.${dimension} = "%s"`, async (size) => {
       const response = await apolloServer.executeOperation({
         query: `
@@ -61,7 +61,7 @@ describe('Create warehouse', () => {
             createWarehouse(name: $name, size: $size)
           }
         `,
-        variables: createVariable({ size: { [dimension]: size } })
+        variables: createVariable({ size: { [dimension]: size } }),
       });
 
       assert(response.body.kind === 'single');
@@ -71,14 +71,14 @@ describe('Create warehouse', () => {
         details: expect.objectContaining({
           path: 'size.' + dimension,
           value: size,
-        })
+        }),
       }));
     });
   }
 
   it('should fail with UNIQUE_CONSTRAINT code when warehouse with the same name already exists', async () => {
     await warehouseRepository.save(entityFactory.createWarehouse({
-      name: 'Test Warehouse'
+      name: 'Test Warehouse',
     }));
 
     const response = await apolloServer.executeOperation({
@@ -87,7 +87,7 @@ describe('Create warehouse', () => {
           createWarehouse(name: $name, size: $size)
         }
       `,
-      variables: createVariable({ name: 'Test Warehouse' })
+      variables: createVariable({ name: 'Test Warehouse' }),
     });
 
     assert(response.body.kind === 'single');
@@ -96,7 +96,7 @@ describe('Create warehouse', () => {
       code: 'UNIQUE_CONSTRAINT',
       details: expect.objectContaining({
         path: 'name',
-      })
+      }),
     }));
   });
 
@@ -107,7 +107,7 @@ describe('Create warehouse', () => {
           createWarehouse(name: $name, size: $size)
         }
       `,
-      variables: createVariable()
+      variables: createVariable(),
     });
 
     assert(response.body.kind === 'single');

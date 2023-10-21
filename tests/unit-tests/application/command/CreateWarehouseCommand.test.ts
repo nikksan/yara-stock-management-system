@@ -1,11 +1,11 @@
-import CreateWarehouseCommand from "@application/command/CreateWarehouseCommand";
-import InMemoryWarehouseRepository from "../../../utils/in-memory-repos/InMemoryWarehouseRepository";
-import EntityFactory from "../../../utils/entity-factory/EntityFactory";
-import UniqueConstraintError from "@application/errors/UniqueConstraintError";
-import TypeValidationError from "@domain/model/validation/TypeValidationError";
-import Warehouse from "@domain/model/Warehouse";
-import LoggerFactory from "@infrastructure/logger/LoggerFactory";
-import { loadConfig } from "@config/index";
+import CreateWarehouseCommand from '@application/command/CreateWarehouseCommand';
+import InMemoryWarehouseRepository from '../../../utils/in-memory-repos/InMemoryWarehouseRepository';
+import EntityFactory from '../../../utils/entity-factory/EntityFactory';
+import UniqueConstraintError from '@application/errors/UniqueConstraintError';
+import TypeValidationError from '@domain/model/validation/TypeValidationError';
+import Warehouse from '@domain/model/Warehouse';
+import LoggerFactory from '@infrastructure/logger/LoggerFactory';
+import { loadConfig } from '@config/index';
 
 describe('CreateWarehouseCommand', () => {
   const warehouseRepository = new InMemoryWarehouseRepository();
